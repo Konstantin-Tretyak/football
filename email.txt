@@ -1,0 +1,128 @@
+2016-04-21 16:13:59 Zidane Hello, Zidane!!! Теперь вы подписаны на команду Real Madrid
+2016-04-21 16:14:22 Torres Hello, Torres!!! Теперь вы подписаны на команду Athletico Madrid
+2016-04-21 16:21:10 Red_Deivil Hello, Red_Deivil!!! Теперь вы подписаны на команду Manchester United
+2016-04-21 16:44:27 Fialka Hello, Fialka!!! Теперь вы подписаны на команду AC Fiorentina
+2016-04-21 16:58:04 Alexander_Tretiak Hello, Alexander_Tretiak!!! Теперь вы подписаны на команду Tottanham
+2016-04-22 01:39:12 princ_grenlandii Tottanham Hotspurбыл переименован в Tottanham Hotspur
+2016-04-22 01:39:12 Alexander_Tretiak 2016-04-22 01:39:12 princ_grenlandii Tottanham Hotspurбыл переименован в Tottanham Hotspur
+
+2016-04-22 01:40:54 emin Hello, emin!!! Теперь вы подписаны на команду Inter
+2016-04-22 01:41:35 shurik Hello, shurik!!! Теперь вы подписаны на команду Inter
+
+
+2016-04-22 01:45:23 Princessa_Mourinho Inter Milanбыл переименован в Inter
+2016-04-22 01:45:23 emin Inter Milanбыл переименован в Inter
+2016-04-22 01:45:23 shurik Inter Milanбыл переименован в Inter
+2016-04-22 02:16:30 Princessa_Mourinho team_id было измененно с 10 на10
+2016-04-22 02:16:30 emin team_id было измененно с 10 на10
+2016-04-22 02:16:30 shurik team_id было измененно с 10 на10
+2016-04-22 02:17:38 Princessa_Mourinho team_id было измененно с 10 на10
+2016-04-22 02:17:38 emin team_id было измененно с 10 на10
+2016-04-22 02:17:38 shurik team_id было измененно с 10 на10
+2016-04-22 02:20:42 Princessa_Mourinho Имя игрока было измененно с Eders наEder
+2016-04-22 02:20:42 emin Имя игрока было измененно с Eders наEder
+2016-04-22 02:20:42 shurik Имя игрока было измененно с Eders наEder
+2016-04-22 02:34:35 princ_grenlandii Tottanham Hotspurбыл переименован в Tottanham
+2016-04-22 02:34:35 Alexander_Tretiak Tottanham Hotspurбыл переименован в Tottanham
+2016-04-22 02:35:19 Princessa_Mourinho Interбыл переименован в Inter Milan
+2016-04-22 02:35:19 emin Interбыл переименован в Inter Milan
+2016-04-22 02:35:19 shurik Interбыл переименован в Inter Milan
+2016-04-22 02:36:12 Princessa_Mourinho Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:36:12 emin Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:36:12 shurik Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:36:59 Princessa_Mourinho Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:36:59 emin Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:36:59 shurik Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:38:33 Princessa_Mourinho Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:38:33 emin Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:38:33 shurik Позиция игрока была измененно с Juventus на Juventus
+2016-04-22 02:41:14 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:41:14 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:41:14 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:42:45 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:42:45 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:42:45 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:45:15 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:45:15 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:45:15 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:47:41 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:47:41 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:47:41 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:51:53 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:51:53 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:51:53 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:53:59 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:53:59 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:53:59 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:57:26 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:57:26 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 02:57:26 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 03:07:01 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 03:07:01 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 03:07:01 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 03:07:40 Princessa_Mourinho Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 03:07:40 emin Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 03:07:40 shurik Клуб игрока была изменен с Juventus на Juventus
+2016-04-22 03:11:38 Princessa_Mourinho Имя игрока было измененно с Eder на Eders
+2016-04-22 03:11:38 emin Имя игрока было измененно с Eder на Eders
+2016-04-22 03:11:38 shurik Имя игрока было измененно с Eder на Eders
+2016-04-22 03:11:57 Princessa_Mourinho Клуб игрока была изменен с Juventus на PSG
+2016-04-22 03:11:57 emin Клуб игрока была изменен с Juventus на PSG
+2016-04-22 03:11:57 shurik Клуб игрока была изменен с Juventus на PSG
+2016-04-22 03:15:43 Princessa_Mourinho Клуб игрока была изменен с  на 
+2016-04-22 03:15:43 emin Клуб игрока была изменен с  на 
+2016-04-22 03:15:43 shurik Клуб игрока была изменен с  на 
+2016-04-22 03:16:51 Princessa_Mourinho Клуб игрока была изменен с Inter Milan на FC Barcelona
+2016-04-22 03:16:51 emin Клуб игрока была изменен с Inter Milan на FC Barcelona
+2016-04-22 03:16:51 shurik Клуб игрока была изменен с Inter Milan на FC Barcelona
+2016-04-22 03:18:16 Princessa_Mourinho Имя игрока было измененно с Eder на Eders
+2016-04-22 03:18:16 emin Имя игрока было измененно с Eder на Eders
+2016-04-22 03:18:16 shurik Имя игрока было измененно с Eder на Eders
+2016-04-22 03:18:28 Princessa_Mourinho Клуб игрока была изменен с Inter Milan на PSG
+2016-04-22 03:18:28 emin Клуб игрока была изменен с Inter Milan на PSG
+2016-04-22 03:18:28 shurik Клуб игрока была изменен с Inter Milan на PSG
+2016-04-22 03:19:07 Zlatanka Клуб игрока была изменен с PSG на Inter Milan
+2016-04-22 03:32:04 Princessa_Mourinho Имя игрока было измененно с Eder на Eders
+2016-04-22 03:32:04 Princessa_Mourinho Позиция игрока была измененно с Center Miedfield на Forward
+2016-04-22 03:32:04 Princessa_Mourinho Клуб игрока была изменен с Inter Milan на Juventus
+2016-04-22 03:32:04 emin Имя игрока было измененно с Eder на Eders
+2016-04-22 03:32:04 emin Позиция игрока была измененно с Center Miedfield на Forward
+2016-04-22 03:32:04 emin Клуб игрока была изменен с Inter Milan на Juventus
+2016-04-22 03:32:04 shurik Имя игрока было измененно с Eder на Eders
+2016-04-22 03:32:04 shurik Позиция игрока была измененно с Center Miedfield на Forward
+2016-04-22 03:32:04 shurik Клуб игрока была изменен с Inter Milan на Juventus
+2016-04-22 03:38:30 Allegri Клуб игрока Eders был изменен с Juventus на Inter Milan
+2016-04-22 03:38:50 Princessa_Mourinho Клуб игрока Eders был изменен с Inter Milan на AS Roma
+2016-04-22 03:38:50 emin Клуб игрока Eders был изменен с Inter Milan на AS Roma
+2016-04-22 03:38:50 shurik Клуб игрока Eders был изменен с Inter Milan на AS Roma
+2016-04-22 03:53:33 Princessa_Mourinho Имя игрока было измененно с Eders на Eder
+2016-04-22 03:53:33 Princessa_Mourinho Клуб игрока Eder был изменен с AS Roma на Inter Milan
+2016-04-22 03:53:33 emin Имя игрока было измененно с Eders на Eder
+2016-04-22 03:53:33 emin Клуб игрока Eder был изменен с AS Roma на Inter Milan
+2016-04-22 03:53:33 shurik Имя игрока было измененно с Eders на Eder
+2016-04-22 03:53:33 shurik Клуб игрока Eder был изменен с AS Roma на Inter Milan
+2016-04-22 04:04:56 princ_grenlandii Имя игрока было измененно с Eder на Eder
+2016-04-22 04:04:56 princ_grenlandii Клуб игрока Eder был изменен с Inter Milan на Tottanham
+2016-04-22 04:04:56 Princessa_Mourinho Имя игрока было измененно с Eder на Eder
+2016-04-22 04:04:56 Princessa_Mourinho Клуб игрока Eder был изменен с Inter Milan на Tottanham
+2016-04-22 04:04:56 Alexander_Tretiak Имя игрока было измененно с Eder на Eder
+2016-04-22 04:04:56 Alexander_Tretiak Клуб игрока Eder был изменен с Inter Milan на Tottanham
+2016-04-22 04:04:56 emin Имя игрока было измененно с Eder на Eder
+2016-04-22 04:04:56 emin Клуб игрока Eder был изменен с Inter Milan на Tottanham
+2016-04-22 04:04:56 shurik Имя игрока было измененно с Eder на Eder
+2016-04-22 04:04:56 shurik Клуб игрока Eder был изменен с Inter Milan на Tottanham
+2016-04-22 04:05:55 princ_grenlandii Клуб игрока Eder был изменен с Tottanham на Inter Milan
+2016-04-22 04:05:55 Princessa_Mourinho Клуб игрока Eder был изменен с Tottanham на Inter Milan
+2016-04-22 04:05:55 Alexander_Tretiak Клуб игрока Eder был изменен с Tottanham на Inter Milan
+2016-04-22 04:05:55 emin Клуб игрока Eder был изменен с Tottanham на Inter Milan
+2016-04-22 04:05:55 shurik Клуб игрока Eder был изменен с Tottanham на Inter Milan
+2016-04-22 04:08:38 princ_grenlandii Позиция игрока была измененно с Forward на Center Forward
+2016-04-22 04:08:38 Alexander_Tretiak Позиция игрока была измененно с Forward на Center Forward
+2016-04-22 04:52:24 princ_grenlandii В клубе Tottanham появился игрок Kevin Tripier
+2016-04-22 04:52:24 Alexander_Tretiak В клубе Tottanham появился игрок Kevin Tripier
+2016-04-22 13:23:51 princ_grenlandii Игра Tottanham - Bayern Munchen
+2016-04-22 13:23:51 shurik Игра Tottanham - Bayern Munchen
+2016-04-22 13:23:51 Alexander_Tretiak Игра Tottanham - Bayern Munchen
+2016-04-22 13:24:35 princ_grenlandii Игра Tottanham - Bayern Munchen
+2016-04-22 13:24:35 shurik Игра Tottanham - Bayern Munchen
+2016-04-22 13:24:35 Alexander_Tretiak Игра Tottanham - Bayern Munchen
