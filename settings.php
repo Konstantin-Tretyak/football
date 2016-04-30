@@ -1,6 +1,6 @@
 <?php
     ///Base path to the something files
-    define('ROOT_CATALOGUE', 'http://my_football.local:81');
+    define('ROOT_CATALOGUE', '/');
     define('BASE_DIR', __DIR__);
 
 
@@ -110,9 +110,9 @@
             extract($data);
         }
 
-        $path = BASE_DIR.'\view\\'.$catalogue.'\\'.$path.'.view.php';
+        $path = BASE_DIR.'/view/'.$catalogue.'/'.$path.'.view.php';
 
-        require BASE_DIR.'\view\\'.$catalogue.'\layout.php';
+        require BASE_DIR.'/view/'.$catalogue.'/layout.php';
     }
 
     ///admin view

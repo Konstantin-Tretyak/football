@@ -6,8 +6,8 @@
         </title>
         <meta charset="utf-8">
 
-        <link rel="stylesheet" href="<?php echo url('/css/bootstrap.css'); ?>">
-        <link rel="stylesheet" href="<?php echo url('/css/css.css'); ?>">
+        <link rel="stylesheet" href="<?php echo url('css/bootstrap.css'); ?>">
+        <link rel="stylesheet" href="<?php echo url('css/css.css'); ?>">
     </head>
     <body>
         <header>
@@ -36,7 +36,7 @@
 
                         <?php if (isset($errors['password'])): ?>
                             <span class="help-block"><?php echo $errors['password'] ?></span>
-                        <?php endif ?> 
+                        <?php endif ?>
                 <?php endif; ?>
             </form>
         </header>
