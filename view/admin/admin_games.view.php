@@ -2,19 +2,19 @@
     Матчи
 </h2>
 
-<a href="../games/new.php"><button>New Game</button></a>
+<a href="../games/new"><button>New Game</button></a>
 
 <table class="table table-striped">
     <?php foreach ($last_games as $last_game): ?>
         <tr>
             <td><?php echo $last_game['date'] ?></td>
             <td>
-                <a href="../teams/edit.php?club_id=<?php echo ($last_game['home_team_id']); ?>">
+                <a href="<?php echo url(url_for('admin_teams_edit')); ?>?club_id=<?php echo ($last_game['home_team_id']); ?>">
                     <?php echo $last_game['home_team_name'] ?>
                 </a>
             </td>
             <td>
-                <a href="edit.php?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['games_id']); ?>">
                     <?php 
                     if ( strtotime($last_game['date']) <= strtotime(date('y-m-d')) )
                         echo $last_game['home_scores']." - ".$last_game['guest_scores'];
@@ -24,12 +24,12 @@
                 </a>
             </td>
             <td>
-                <a href="../teams/edit.php?club_id=<?php echo ($last_game['guest_team_id']); ?>">
+                <a href="<?php echo url(url_for('admin_teams_edit')); ?>?club_id=<?php echo ($last_game['home_team_id']); ?>">
                     <?php echo $last_game['guest_team_name'] ?>
                 </a>
             </td>
             <td>
-                <a href="edit.php?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['games_id']); ?>">
                     Edit
                 </a>
             </td>
@@ -65,24 +65,24 @@
         $next_page = $pagin_numb;
     }
 
-    $href = "index.php?N=";
+    $href = "index?N=";
 ?>
 
 <ul class="pagination">
     <li>
-      <a href="index.php?N=<?php echo $prev_page; ?>" aria-label="Previous">
+      <a href="index?N=<?php echo $prev_page; ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     <?php for ($i=1; $i<=$count_pages; $i++): ?>
         <li>
-            <a href="index.php?N=<?php echo $i; ?>">
+            <a href="index?N=<?php echo $i; ?>">
                 <?php echo ($i); ?>
             </a>
         </li>
     <?php endfor; ?>
     <li>
-      <a href="index.php?N=<?php echo $next_page; ?>" aria-label="Next">
+      <a href="index?N=<?php echo $next_page; ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

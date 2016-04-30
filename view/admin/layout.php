@@ -6,7 +6,8 @@
         </title>
         <meta charset="utf-8">
 
-        <link rel="stylesheet" href="<?php echo ROOT_CATALOGUE; ?>\css\bootstrap.css">
+        <link rel="stylesheet" href="<?php echo url('/css/bootstrap.css'); ?>">
+        <link rel="stylesheet" href="<?php echo url('/css/css.css'); ?>">
     </head>
     <body>
         <ul class="list-inline">
@@ -16,12 +17,12 @@
                 <ul>
                     <li>
 
-                        <a href="<?php echo ROOT_CATALOGUE ?>\admin\teams\index.php">
+                        <a href="<?php echo url_for('admin_teams'); ?>">
                             Edit Teams
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo ROOT_CATALOGUE ?>\admin\teams\new.php">
+                        <a href="<?php echo url_for('admin_teams_new'); ?>">
                             Create New Team
                         </a>
                     </li>
@@ -32,12 +33,12 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="<?php echo ROOT_CATALOGUE ?>\admin\games/index.php">
+                        <a href="<?php echo url_for('admin_games'); ?>">
                             Edit Games
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo ROOT_CATALOGUE ?>\admin\games/new.php">
+                        <a href="<?php echo url_for('admin_games_new'); ?>">
                             Create Games
                         </a>
                     </li>
@@ -47,7 +48,7 @@
                 Players
                 <ul>
                     <li>
-                        <a href="<?php echo ROOT_CATALOGUE ?>\admin\players/new.php">
+                        <a href="<?php echo url_for('admin_players_new'); ?>">
                             Create Player
                         </a>
                     </li>

@@ -11,7 +11,7 @@
         <tr>
             <td><?php echo $last_game['date'] ?></td>
             <td>
-                <a href="club_page.php?club_id=<?php echo ($last_game['home_team_id']); ?>">
+                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($last_game['home_team_id']); ?>">
                     <?php echo $last_game['home_team_name'] ?>
                 </a>
             </td>
@@ -21,7 +21,7 @@
                 </button>
             </td>
             <td>
-                <a href="game.php?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url_for('game'); ?>?game=<?php echo ($last_game['games_id']); ?>">
                     <?php 
                     if ( strtotime($last_game['date']) <= strtotime(date('y-m-d')) )
                         echo $last_game['home_scores']." - ".$last_game['guest_scores'];
@@ -32,7 +32,7 @@
                 </a>
             </td>
             <td>
-                <a href="club_page.php?club_id=<?php echo ($last_game['guest_team_id']); ?>">
+                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($last_game['guest_team_id']); ?>">
                     <?php echo $last_game['guest_team_name'] ?></td>
                 </a>
             </td>
@@ -89,19 +89,19 @@
 
 <ul class="pagination">
     <li>
-      <a href="index.php?N=<?php echo $prev_page; ?>" aria-label="Previous">
+      <a href="<?php echo url_for('main'); ?>?N=<?php echo $prev_page; ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     <?php for ($i=1; $i<=$count_pages; $i++): ?>
         <li>
-            <a href="index.php?N=<?php echo $i; ?>">
+            <a href="<?php echo url_for('main'); ?>?N=<?php echo $i; ?>">
                 <?php echo ($i); ?>
             </a>
         </li>
     <?php endfor; ?>
     <li>
-      <a href="index.php?N=<?php echo $next_page; ?>" aria-label="Next">
+      <a href="<?php echo url_for('main'); ?>?N=<?php echo $next_page; ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

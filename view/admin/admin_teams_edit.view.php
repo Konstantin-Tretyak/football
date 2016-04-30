@@ -15,7 +15,7 @@
     Players
 </h2>
 
-<a href="../players/new.php"><button class="btn btn-default">New Player</button></a>
+<a href="<?php echo url(url_for('admin_players_new')); ?>"><button class="btn btn-default">New Player</button></a>
 
 <table>
     <?php foreach($players as $player): ?>
@@ -24,7 +24,7 @@
                 <?php echo $player['name']; ?>
             </td>
             <td>
-                <a href="../players/edit.php?player_id=<?php echo $player['id'] ?>">
+                <a href="<?php echo url(url_for('admin_players_edit')); ?>?player_id=<?php echo $player['id'] ?>">
                     Edit
                 </a>
             </td>

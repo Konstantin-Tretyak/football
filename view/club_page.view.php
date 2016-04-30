@@ -1,4 +1,4 @@
-<a href="/football">На главную</a>
+<a href="/">На главную</a>
 
 <h1>
     <?php echo $team_name['name']; ?>
@@ -13,12 +13,12 @@
         <tr>
             <td><?php echo $last_game['date'] ?></td>
             <td>
-                <a href="club_page.php?club_id=<?php echo ($last_game['home_team_id']); ?>">
+                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($last_game['home_team_id']); ?>">
                     <?php echo $last_game['home_team_name'] ?>
                 </a>
             </td>
             <td>
-                <a href="game.php?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url_for('game'); ?>?game=<?php echo ($last_game['games_id']); ?>">
                     <?php 
                     if ( strtotime($last_game['date']) <= strtotime(date('y-m-d')) )
                         echo $last_game['home_scores']." - ".$last_game['guest_scores'];
@@ -29,7 +29,7 @@
                 </a>
             </td>
             <td>
-                <a href="club_page.php?club_id=<?php echo ($last_game['guest_team_id']); ?>">
+                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($last_game['guest_team_id']); ?>">
                     <?php echo $last_game['guest_team_name'] ?></td>
                 </a>
             </td>

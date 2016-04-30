@@ -1,11 +1,4 @@
 <?php
-    
-    require '../../settings.php';
-
-    session_start();
-    //Connect to the DATA BASE
-    $conn = connect($config);
-
     $data = null;
 
     ///$current_page inicialization
@@ -34,7 +27,7 @@
         {
            if ( $value != "" )
             {
-                if (strnatcasecmp($key, "home_scores") || strnatcasecmp($key, "guest_scores"))
+                if ((!strnatcasecmp($key, "home_scores")) || (!strnatcasecmp($key, "guest_scores")))
                 {
                     if( $date1 = strtotime($game_old['date']) > $date2=strtotime(date('y-m-d')) )
                     {

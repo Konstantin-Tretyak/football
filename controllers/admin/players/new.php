@@ -1,10 +1,4 @@
 <?php
-    require '../../settings.php';
-
-    session_start();
-    //Connect to the DATA BASE
-    $conn = connect($config);
-
     $data = null;
 
     if ($_SERVER['REQUEST_METHOD'] == "POST")
@@ -29,12 +23,15 @@
                            array('user_team_id'=>$_POST['players_team_id']),
                            $conn);
 
-        $message['players_new'] = "В клубе ".$user_data[0]['user_teams_name'].$message_for_user['player_was_create'].$_POST['player_name'];
-
-        foreach ($user_data as $data)
+        if ( !empty($user_data) )
         {
-            $letter = create_Email_letter($data['user_email'], $message);
-            send_Email($letter);
+            $message['players_new'] = "В клубе ".$user_data[0]['user_teams_name'].$message_for_user['player_was_create'].$_POST['player_name'];
+
+            foreach ($user_data as $data)
+            {
+                $letter = create_Email_letter($data['user_email'], $message);
+                send_Email($letter);
+            }
         }
 
         $_SESSION['message']=$message_for_admin['players_new'];

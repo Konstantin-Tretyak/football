@@ -1,22 +1,14 @@
 <?php
-    require 'settings.php';
-
-    //Connect to the DATA BASE
-    $conn = connect($config);
-
     $data;
 
-    if (!$conn)
-        die("I can't connect DB! I'm sorry!");
-
     ///$current_page inicialization
-        if ( isset($_GET['game']) )
+        if ( isset($_GET['game']) && is_numeric($_GET['game']) )
         {
             $current_page = (int) $_GET['game'];
         }
         else 
         {
-            die("Нет страницы");
+            throw new NotFoundException();
         }
     ///end $current_page inicialization
 

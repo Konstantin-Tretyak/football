@@ -1,14 +1,5 @@
 <?php
-    require '../../settings.php';
-
-    session_start();
-    //Connect to the DATA BASE
-    $conn = connect($config);
-
     $data;
-
-    if (!$conn)
-        die("I can't connect DB! I'm sorry!");
 
     $data['games'] = query("SELECT * FROM games", array(), $conn);
 

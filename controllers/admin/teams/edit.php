@@ -1,9 +1,4 @@
 <?php
-    require '../../settings.php';
-    //Connect to the DATA BASE
-    session_start();
-    $conn = connect($config);
-
     $data = null;
 
     ///$current_page inicialization

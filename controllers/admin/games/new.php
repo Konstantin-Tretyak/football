@@ -1,10 +1,4 @@
 <?php
-    require '../../settings.php';
-
-    session_start();
-    //Connect to the DATA BASE
-    $conn = connect($config);
-
     $data = null;
     $valide_data = true;
 
@@ -33,7 +27,7 @@
                                     'date'=>$_POST['date']),
                              $conn);
 
-            /*$data['teams'] = query("SELECT * FROM teams", array(), $conn);
+            $data['teams'] = query("SELECT * FROM teams", array(), $conn);
 
             $user_data = query("SELECT user_email, user.team_id as user_team_id, teams.id as teams_id, teams.name as user_teams_name
                                 FROM user INNER JOIN teams ON user.team_id = teams.id
@@ -41,13 +35,13 @@
                                 array('home_team_id'=>$_POST['home_team_id'], 'guest_team_id'=>$_POST['guest_team_id']),
                                 $conn);
 
-            $message['game_new'] = "Игра ".$data['teams'][$_POST['home_team_id']-1]['name']." - ".$data['teams'][$_POST['guest_team_id']-1]['name'];
+            $message['game_new'] = "Игра ".$data['teams'][$_POST['home_team_id']-1]['name']." - ".$data['teams'][$_POST['guest_team_id']-1]['name']." состоится ".$_POST['date'];
 
             foreach ($user_data as $data)
             {
                 $letter = create_Email_letter($data['user_email'], $message);
                 send_Email($letter);
-            }*/
+            }
 
             $_SESSION['message']=$message_for_admin['games_new'];
 
