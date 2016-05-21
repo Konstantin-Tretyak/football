@@ -1,69 +1,71 @@
 <?php
 
-/* APP INIT AREA. BEGIN */
-
+function app_run() {
     require __DIR__.'/settings.php';
+    require __DIR__.'/Autoloading.php';
 
-    //Connect to the DATA BASE
-    $conn = connect();
+    $connection_string = "mysql:host=localhost;dbname=foot";
+    $user = 'root';
+    $password = '';
+    $conn = new PDO($connection_string, $user, $password);
 
-    try {
-        require BASE_DIR.'/controllers/'.check_exist_url();
+    DbModel::setConnection($conn);
+
+    try
+    {
+        $route = get_route();
+
+        if ($route = get_route())
+        {
+            require BASE_DIR.'/controllers/'.$route['file'];
+            $handler = $route['namespace'].'\\'.$route['function'];
+            $response = $handler();
+
+            if (!is_array($response))
+            {
+                $response = ['code' => 200, 'body' => $response];
+            }
+        }
+        else 
+        {
+            throw new NotFoundException();
+        }
     }
-    catch (NotFoundException $e) {
-        http_response_code(404);
-        require BASE_DIR.'/controllers/error/error.php';
+    catch (NotFoundException $e)
+    {
+        $response = ['code' => 404, 'body' => $body];
     }
-    catch (WrongInputException $e) {
-        http_response_code(302);
-        $_SESSION['errors'] = $e->errors;
-
-        redirect_back();
+    catch (WrongInputException $e)
+    {
+        // TODO: for AJAX requests, work differently: return 400 code and array of errors
+        flash_set('old', $_POST);
+        flash_set('errors', $e->errors);
+        $response = redirect_back();
     }
-    catch (InternalServerException $e) {
-        http_response_code(500);
+    catch (NotAllowedException $e)
+    {
+        $response = ['code' => 403, 'body' => view('errors/403')];
     }
-    /* routing code. end */
-
-/* APP INIT AREA. END */
-
-/* CONTROLLERS AREA. BEGIN */
-    // TODO NEXT VERSIONS: this area should be moved to separate place
-
-    // TODO NEXT COMMIT: take HTML from HTML files
-    function home() {
-        return '
-            <html>
-            <head>
-                <link rel="stylesheet" type="text/css" href="/css/main.css">
-            </head>
-            <body>
-                home page
-            </body>
-            </html>';
+    catch (NotAuthorizedException $e)
+    {
+        if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest')) {
+            $response = [
+                'code' => 403, 
+                'body' => json_encode(['error' => 'You are not signed in. Please, sign in and refresh the page'])
+            ];
+        }
+        else {
+            flash_set('authorize_return_url', $_SERVER['REQUEST_URI']);
+            $response = redirect(url_for('login'));
+        }
     }
 
-    function posts_index() {
-        return '
-            <html>
-            <head>
-                <link rel="stylesheet" type="text/css" href="/css/main.css">
-            </head>
-            <body>
-                posts page
-            </body>
-            </html>';
+    catch (Exception $e)
+    {
+        // TODO: log 500 errors
+        $body = (ENV == 'dev') ? "<pre>".$e->getMessage()."\n".$e->getTraceAsString()."</pre>" : view('errors/500');
+        $response = ['code' => 500, 'body' => $body];
     }
 
-    function posts_new() {
-        return '
-            <html>
-            <head>
-                <link rel="stylesheet" type="text/css" href="/css/main.css">
-            </head>
-            <body>
-                form to add a new post
-            </body>
-            </html>';
-    }
-/* CONTROLLERS AREA. END */
+    return $response;
+}

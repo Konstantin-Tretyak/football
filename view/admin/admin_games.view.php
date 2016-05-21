@@ -14,7 +14,7 @@
                 </a>
             </td>
             <td>
-                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['id']); ?>">
                     <?php 
                     if ( strtotime($last_game['date']) <= strtotime(date('y-m-d')) )
                         echo $last_game['home_scores']." - ".$last_game['guest_scores'];
@@ -24,12 +24,12 @@
                 </a>
             </td>
             <td>
-                <a href="<?php echo url(url_for('admin_teams_edit')); ?>?club_id=<?php echo ($last_game['home_team_id']); ?>">
+                <a href="<?php echo url(url_for('admin_teams_edit')); ?>?club_id=<?php echo ($last_game['guest_team_id']); ?>">
                     <?php echo $last_game['guest_team_name'] ?>
                 </a>
             </td>
             <td>
-                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['id']); ?>">
                     Edit
                 </a>
             </td>

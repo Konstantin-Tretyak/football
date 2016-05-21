@@ -26,23 +26,28 @@
         }
     ?>
 
-<form action="" method="post">
+<form action="http://my_football.local:81/game?game=1" method="post">
     <div class="form-group">
         <label for="user">Кто ты?</label>
         <input type="text" class="form-control" name="user" id="user" placeholder="Кто ты?">
         <textarea name="body" id="body"></textarea>
-        <button type="submit" class="btn btn-default">Комментировать</button>
+        <button type="submit" class="btn btn-default" id="sub_comment">Комментировать</button>
     </div>
 </form>
 
 <?php foreach ($comments as $comment) : ?>
-    <h3>
-        <?php echo $comment['author_name']; ?>
-    </h3>
-    <h4>
-        <?php echo $comment['body']; ?>
-    </h4>
-    <p>
-        <?php echo $comment['date']; ?>
-    </p>
+    <div>
+        <h3>
+            <?php echo $comment['author_name']; ?>
+        </h3>
+        <h4>
+            <?php echo $comment['body']; ?>
+        </h4>
+        <p>
+            <?php echo $comment['date']; ?>
+        </p>
+    </div>
 <?php endforeach ?>
+
+<script src="<?php echo url('/scripts/jquery-1.12.1.js'); ?>"></script>
+<script src="<?php echo url('/scripts/comments.js'); ?>"></script>

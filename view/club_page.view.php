@@ -18,7 +18,7 @@
                 </a>
             </td>
             <td>
-                <a href="<?php echo url_for('game'); ?>?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url_for('game'); ?>?game=<?php echo ($last_game['id']); ?>">
                     <?php 
                     if ( strtotime($last_game['date']) <= strtotime(date('y-m-d')) )
                         echo $last_game['home_scores']." - ".$last_game['guest_scores'];
@@ -49,8 +49,8 @@
            foreach ($team_players as $team_player)
            {
                 echo "<tr>
-                        <td>{$team_player['name']}</td>
-                        <td>{$team_player['position']}</td>
+                        <td>{$team_player->name}</td>
+                        <td>{$team_player->position}</td>
                       </tr>";
             }
         }

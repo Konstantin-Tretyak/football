@@ -7,7 +7,7 @@
         <label for="change_club_name">Изменить название</label>
         <input type="text" class="form-control" name="name" id="change_club_name" placeholder="<?php echo $team['name']; ?>">
         <button type="submit" class="btn btn-default">Изменить название и продолжить</button>
-        <button type="submit" name="page" value="index.php" class="btn btn-default">Изменить название</button>
+        <button type="submit" name="page" value="<?php echo url(url_for('admin_teams')) ?>" class="btn btn-default">Изменить название</button>
     </div>
 </form>
 

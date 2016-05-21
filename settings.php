@@ -1,47 +1,54 @@
 <?php
     ///Base path to the something files
-    define('ROOT_CATALOGUE', '/');
+    define('ROOT_CATALOGUE', 'http://my_football.local:81');
     define('BASE_DIR', __DIR__);
+    define('ENV', 'dev');
 
 
-    $_ROUTES = [
+    function all_routes() {
+        return [
 
-        // TODO: move methods to classes and write like
-        //       => ['class' => '\App\HomeController',  'method' => 'home'],
-        //Openning pages
-        '/'                    => ['file' =>'games_list.php', 'alias'=>'main'],
-        '/login'               => ['file' =>'auth/login.php' , 'alias'=>'login'],
-        '/club'                => ['file' =>'club_page.php', 'alias'=>'club'],
-        '/game'                => ['file' =>'game.php', 'alias'=>'game'],
-        //Admin pages
-        '/admin'               => ['file' =>'admin/index.php', 'alias'=>'admin'],
-        '/admin/teams/edit'    => ['file' =>'admin/teams/edit.php', 'alias'=>'admin_teams_edit'],
-        '/admin/teams/new'     => ['file' =>'admin/teams/new.php', 'alias'=>'admin_teams_new'],
-        '/admin/teams/index'   => ['file' =>'admin/teams/index.php', 'alias'=>'admin_teams'],
-        '/admin/games/edit'    => ['file' =>'admin/games/edit.php', 'alias'=>'admin_games_edit'],
-        '/admin/games/new'     => ['file' =>'admin/games/new.php', 'alias'=>'admin_games_new'],
-        '/admin/games/index'   => ['file' =>'admin/games/index.php', 'alias'=>'admin_games'],
-        '/admin/players/new'   => ['file' =>'admin/players/new.php', 'alias'=>'admin_players_new'],
-        '/admin/players/edit'  => ['file' =>'admin/players/edit.php', 'alias'=>'admin_players_edit'],
-    ];
+            // TODO: move methods to classes and write like
+            //       => ['class' => '\App\HomeController',  'method' => 'home'],
+            //Openning pages
+            '/'                    => ['file' =>'games_list.php', 'namespace' => 'Controllers\UserPages', 'function' => 'game_list_page', 'alias'=>'main'],
+            '/club'                => ['file' =>'club_page.php', 'namespace' => 'Controllers\UserPages', 'function' => 'club_page', 'alias'=>'club'],
+            '/game'                => ['file' =>'game.php', 'namespace' => 'Controllers\UserPages', 'function' => 'game_page', 'alias'=>'game'],
+            //Login/logout
+            '/login'               => ['file' =>'auth.php', 'namespace' => 'Controllers\Auth', 'function' => 'login',  'alias'=>'login'],
+            '/logout'              => ['file' =>'auth.php', 'namespace' => 'Controllers\Auth', 'function' => 'logout', 'alias'=>'logout'],
+            //Admin pages
+            '/admin'               => ['file' =>'admin/index.php',  'namespace' => 'Controllers\Admin', 'function' => 'index',  'alias'=>'admin'],
+
+            // TODO: autoloading (auto-require file by namespace)
+            '/admin/teams/edit'    => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'edit',  'alias'=>'admin_teams_edit'],
+            '/admin/teams/new'  => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'create',   'alias'=>'admin_teams_new'],
+            '/admin/teams/index'   => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'index', 'alias'=>'admin_teams'],
+
+            '/admin/games/edit'    => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'edit',  'alias'=>'admin_games_edit'],
+            '/admin/games/new'     => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'create',   'alias'=>'admin_games_new'],
+            '/admin/games/index'   => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'index',   'alias'=>'admin_games'],
+            
+            '/admin/players/new'   => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'create', 'alias'=>'admin_players_new'],
+            '/admin/players/edit'  => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'edit', 'alias'=>'admin_players_edit'],
+        ];
+    }
+
+    function message_for_admin()
+    {
+        return array('teams_edit_name'=>'Название команды было измененно',
+                     'teams_new'=>'Команда была созданна',
+                     'games_edit'=>'Игра была изменена',
+                     'games_new'=>'Игра была созданна',
+                     'games_edit_not_start'=>'Матч ещё не начался, нельзя менять счет',
+                     'players_edit'=>'Игрок был изменен',
+                     'players_new'=>'Игрок был создан'
+                    );
+    }
 
     ///DATA BASE
 
     $another_page = false;
-
-    $message_for_admin = array('teams_edit_name'=>'Название команды было измененно',
-                                'teams_new'=>'Команда была созданна',
-                                'games_edit'=>'Игра была изменена',
-                                'games_new'=>'Игра была созданна',
-                                'games_edit_not_start'=>'Матч ещё не начался, нельзя менять счет',
-                                'players_edit'=>'Игрок был изменен',
-                                'players_new'=>'Игрок был создан'
-                                );
-
-    $message_for_user = array('teams_add_to_user_liked'=>"Мы будем вам оповещать про все последние изменения в команде",
-                              'teams_was_add_to_user_liked'=>"Теперь вы подписаны на команду ",
-                              'teams_was_renamed'=>" был переименован в ",
-                               'player_was_create'=>" появился игрок ");
 
     define('FILE_NAMES_EMAIL' ,"D:\\xampp\htdocs\\football\\email.txt");
 
@@ -50,19 +57,11 @@
         $config = array('username' => 'root',
                         'password' => '');
 
-        try
-        {
-            $conn = new PDO('mysql:host=localhost;dbname=foot',
-                            $config['username'],
-                            $config['password']);
+        $conn = new PDO('mysql:host=localhost;dbname=foot',
+                        $config['username'],
+                        $config['password']);
 
-            return $conn;
-        }
-        catch(Exception $e)
-        {
-            throw InternalServerException();
-            return false;
-        }
+        return $conn;
     }
 
     function query($query, $bindings, $conn)
@@ -91,37 +90,31 @@
     ////end DATA BASE
 
     ///work with page
+    // TODO: remove $catalogue
     function view($path, $data = null, $catalogue="")
     {
-        show_admin_messages();
+        echo flash_get('message');
 
-        $data['authorized_user'] = null;
-        if (!empty($_SESSION['user_id'])) {
-            // get user data from DB by id
-            $data['authorized_user'] = ['id' => 1, 'login' => 'admin'];
-        }
+        $data['authorized_user'] = get_authorized_user();
 
-        $data['old_autorize'] = isset($_SESSION['old']) ? $_SESSION['old'] : [];
+        $data['old'] = flash_get('old');
 
-        $data['errors'] = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+        $data['errors'] = flash_get('errors');
 
         if ($data)
         {
             extract($data);
         }
 
+        ob_start();
         $path = BASE_DIR.'/view/'.$catalogue.'/'.$path.'.view.php';
-
         require BASE_DIR.'/view/'.$catalogue.'/layout.php';
+        return ob_get_clean();
     }
 
     ///admin view
     function show_admin_messages()
     {
-        if(session_id() == "")
-        {
-            session_start();
-        }
         if (!empty($_SESSION['message']))
         {
             echo $_SESSION['message'];
@@ -186,12 +179,14 @@
 
     class NotFoundException extends Exception
     {
-        public $code = 404;
     }
 
     class InternalServerException extends Exception
     {
-        public $code = 500;
+    }
+
+    class NotAllowedException extends Exception
+    {
     }
 
     class WrongInputException extends Exception
@@ -204,15 +199,25 @@
         }
     }
 
+    class NotAuthorizedException extends Exception
+    {
+    }
+
     function redirect($url)
     {
-        header("Location: $url");
-        exit();
+        return ['code' => 302, 'headers' => ['Location' => $url]];
     }
 
     function redirect_back()
     {
-        redirect($_SERVER['HTTP_REFERER']);
+        $request_url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        // var_dump($request_url);
+        // var_dump($_SERVER['HTTP_REFERER']);
+        // TODO: fiex this logic
+        $url = (isset($_SERVER['HTTP_REFERER']) && ($request_url != $_SERVER['HTTP_REFERER']))
+                ? $_SERVER['HTTP_REFERER']
+                : url_for('main');
+        return redirect($url);
     }
 
 
@@ -221,7 +226,6 @@
         $errors = [];
         foreach ($required_fields as $field)
         {
-            $_SESSION['old'][$field] = $input[$field];
             if (empty($input[$field]))
             {
                 $errors[$field] = 'Field is required';
@@ -236,11 +240,10 @@
 
 
 
+    // TODO: return url($url) => no need to write url(url_for('admin_edit')) in templates
     function url_for($alias)
     {
-        global $_ROUTES;
-
-        foreach ($_ROUTES as $url => $params)
+        foreach (all_routes() as $url => $params)
         {
             if (isset($params['alias']) && $params['alias'] == $alias)
             {
@@ -248,23 +251,71 @@
             }
         }
 
-        throw new Exception("Error Processing Request", 1);
+        throw new Exception('Wrong alias '+$alias);
     }
 
-    function check_exist_url()
+    function get_route()
     {
-        global $_ROUTES;
-
         $url_without_params = strtok($_SERVER["REQUEST_URI"],'?');
 
-        foreach($_ROUTES as $url_template => $controller)
+        foreach(all_routes() as $url_template => $route_params)
         {
             if ($url_template == $url_without_params)
             {
-                return $controller['file'];
+                return $route_params;
             }
         }
 
-        throw new NotFoundException();
         return null;
     }
+
+    function flash_set($param, $value) {
+        $_SESSION['flash'][$param] = $value;
+    }
+
+    function flash_has($param) {
+        return isset($_SESSION['flash'][$param]);
+    }
+
+    function flash_get($param) {
+        if (flash_has($param)) {
+            $result = $_SESSION['flash'][$param];
+            unset($_SESSION['flash'][$param]);
+            return $result;
+        }
+        return null;
+    }
+
+    function get_authorized_user() {
+        if (!empty($_SESSION['user'])) {
+            // get user data from DB by id
+            return $_SESSION['user'];
+        }
+        return null;
+    }
+
+    /* middlewares begin */
+        function validate_authorized()
+        {
+            if (!get_authorized_user())
+            {
+                throw new NotAuthorizedException();
+            }
+        }
+
+        function validate_authorized_as_admin()
+        {
+            $user = get_authorized_user();
+
+            if ($user)
+            {
+                if ($user['status'] != 'admin')
+                {
+                    throw new NotAllowedException();
+                }
+            }
+            else
+            throw new NotAuthorizedException(); 
+        }
+
+    /* middlewares end */

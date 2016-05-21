@@ -9,7 +9,7 @@
             <option>
             </option>
             <?php foreach ($teams as $team): ?>
-                <option value="<?php echo $team['id']; ?>">
+                <option value="<?php echo $team['id']; ?>" <?php if(isset($old['home_team_id']) && $team['id'] == $old['home_team_id']) echo "selected" ?> >
                     <?php echo $team['name']; ?>
                 </option>
             <?php endforeach; ?>
@@ -17,6 +17,10 @@
 
         <label for="home_scores">Голы</label>
         <input type="text" name="home_scores" id="home_scores"></input>
+
+        <?php if (isset($errors['home_team_id'])): ?>
+            <span class="help-block"><?php echo $errors['home_team_id'] ?></span>
+        <?php endif ?>
     </p>
 
     <p>
@@ -25,14 +29,19 @@
             <option>
             </option>
             <?php foreach ($teams as $team): ?>
-                <option value="<?php echo $team['id']; ?>">
+                <option value="<?php echo $team['id']; ?>" <?php if(isset($old['guest_team_id']) && $team['id'] == $old['guest_team_id']) echo "selected" ?> >
                     <?php echo $team['name']; ?>
                 </option>
             <?php endforeach; ?>
         </select>
 
+
         <label for="guest_scores">Голы</label>
         <input type="text" name="guest_scores" id="guest_scores"></input>
+
+        <?php if (isset($errors['guest_team_id'])): ?>
+            <span class="help-block"><?php echo $errors['guest_team_id'] ?></span>
+        <?php endif ?>
     </p>
 
     <p>
@@ -40,8 +49,12 @@
         <input type="text" name="date" id="date"></input>
     </p>
 
+        <?php if (isset($errors['date'])): ?>
+            <span class="help-block"><?php echo $errors['date'] ?></span>
+        <?php endif ?>
+
     <p>
         <button type="submit" class="btn btn-default">Создать игру</button>
-        <button type="submit" name="page" value="index.php" class="btn btn-default">Изменить название</button>
+        <button type="submit" name="page" value="<?php echo url(url_for('admin_games')) ?>" class="btn btn-default">Изменить название</button>
     </p>
 </form>

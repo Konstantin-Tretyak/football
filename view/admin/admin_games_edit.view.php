@@ -33,5 +33,5 @@
     </p>
 
     <button type="submit" class="btn btn-default">Изменить название и продолжить</button>
-    <button type="submit" name="page" value="index.php" class="btn btn-default">Изменить название</button>
+        <button type="submit" name="page" value="<?php echo url(url_for('admin_games')) ?>" class="btn btn-default">Изменить название</button>
 </form>

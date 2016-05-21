@@ -21,7 +21,7 @@
                 </button>
             </td>
             <td>
-                <a href="<?php echo url_for('game'); ?>?game=<?php echo ($last_game['games_id']); ?>">
+                <a href="<?php echo url_for('game'); ?>?game=<?php echo ($last_game['id']); ?>">
                     <?php 
                     if ( strtotime($last_game['date']) <= strtotime(date('y-m-d')) )
                         echo $last_game['home_scores']." - ".$last_game['guest_scores'];
@@ -64,6 +64,10 @@
     /// $pagin_numb and $games was extracted at massive $data in the function view('index', $data);
     /// $games - it's a table 'games'
     /// $pagin_numb - it's a number of current page
+
+    // TODO: only controller should care about LIMIT_VIEW_GAMES_INDEX_PAGE. Move this logic to controller
+    // TODO: implement pagination as in http://flask.pocoo.org/snippets/44/
+    
     $count_pages = ceil(count($games) / LIMIT_VIEW_GAMES_INDEX_PAGE);
 
     if ( $pagin_numb - 1 > 0 )
@@ -72,7 +76,7 @@
     }
     else
     {
-        $prev_page = 1;
+        $prev_page = 0;
     }
 
     if ($pagin_numb < $count_pages)
@@ -89,20 +93,36 @@
 
 <ul class="pagination">
     <li>
-      <a href="<?php echo url_for('main'); ?>?N=<?php echo $prev_page; ?>" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
+
+      <?php 
+        // TODO: move this stuff to a separate view and here just include this template
+        if($prev_page > 0)
+        {
+            // TODO: smartly generate pagination links (like link_to_other_page in http://flask.pocoo.org/snippets/44/). For building GET params from array use http_build_query()
+            echo '<a href="'.url_for('main').'?N='.$prev_page.'" aria-label="Previous">';
+            echo '<span aria-hidden="true">&laquo;</span>';
+            echo '</a>';
+        }
+      ?>
     </li>
     <?php for ($i=1; $i<=$count_pages; $i++): ?>
         <li>
-            <a href="<?php echo url_for('main'); ?>?N=<?php echo $i; ?>">
+            <a href="<?php echo url_for('main'); ?>?N=<?php echo $i; ?>" 
+                <?php if($i==$pagin_numb) echo 'style="color: red;"'?>>
                 <?php echo ($i); ?>
             </a>
         </li>
     <?php endfor; ?>
     <li>
-      <a href="<?php echo url_for('main'); ?>?N=<?php echo $next_page; ?>" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
+
+      <?php 
+        if($next_page > $pagin_numb)
+        {
+            echo '<a href="'.url_for('main').'?N='.$next_page.'" aria-label="Next">';
+            echo '<span aria-hidden="true">&raquo;</span>';
+            echo '</a>';
+        }
+      ?>
+
     </li>
 </ul>
