@@ -78,6 +78,12 @@ abstract class DbModel
         return $result;
     }
 
+
+    public static function find($id)
+    {
+        return self::query()->where(self::getPrimaryKeyName().' = ?', [$id])->first();
+    }
+
     public static function create(Array $attributes)
     {
         $currentClass = get_called_class();
@@ -92,13 +98,15 @@ abstract class DbModel
         return $this;
     }
 
-    public function delete()
+    public static function delete($deleting, $number)
     {
-        $sql = sprintf("DELETE FROM '%s' WHERE '%s' = ?",
+        $sql = sprintf("DELETE FROM %s WHERE %s = ?",
                         self::getTableName(),
-                        self::getPrimaryKeyName());
-        self::$conn->prepare($sql)->execute([$this->id]);
-        $this->{self::getPrimaryKeyName()} = null;
+                        $deleting);
+
+        //echo $sql;
+        self::$conn->prepare($sql)->execute([$number]);
+        //$this->{self::getPrimaryKeyName()} = null;
     }
 
     public function save()
@@ -177,8 +185,8 @@ abstract class DbModel
     {
         $localTable = self::getTableName();
         $slaveTable = $slaveClass::getTableName();
-        $query = new QueryBuilder(self::$conn, [$localTable => '*',$slaveTable => '*'], get_class($this));
-        return $query->where("$slaveTable.$slaveForeignKey = $localTable.$localKey", array()); //???Здесь не понятно
+        $query = new QueryBuilder(self::$conn, [$localTable => '*',$slaveTable => '*'], $slaveClass);
+        return $query->where("$slaveTable.$slaveForeignKey = $localTable.$localKey  AND `$localTable`.`$localKey` = ? ", [$this->{$localKey}]); //???Здесь не понятно
     }
 
     public function belongsTo($masterClass, $localKey, $masterForeignKey)
@@ -186,7 +194,7 @@ abstract class DbModel
         // TODO: automatically guess $masterForeignKey and $localKey (guess standard column names)
         $localTable = self::getTableName();
         $masterTable = $masterClass::getTableName();
-        $query = new QueryBuilder(self::$conn, [$masterTable => '*'], $masterClass);
-        return $query->where("`$localTable`.`$localKey` = `$masterTable`.`$masterForeignKey` AND `$localTable`.`$localKey` = ?", [$this->{$localKey}]);
+        $query = new QueryBuilder(self::$conn, [$masterTable => '*', $localTable => '*'], $masterClass);
+        return $query->where("`$localTable`.`$localKey` = `$masterTable`.`$masterForeignKey` AND `$masterTable`.`$masterForeignKey` = ?", [$this->{$localKey}]);
     }
 }

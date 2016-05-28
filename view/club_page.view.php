@@ -4,6 +4,18 @@
     <?php echo $team_name['name']; ?>
 </h1>
 
+    <form action="http://<?php echo $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" class="subscribe" method="post">
+        <button type="submit" class="
+        <?php
+            if ( is_user_club($team_name['id']) )
+                echo "btn btn-danger";
+            else
+                echo "btn btn-primary";
+        ?>"
+        id="<?php echo ($team_name['id']); ?>" data-toggle="modal_users_like" data-target=".bs-example-modal-lg">
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+        </button>
+    </form>
 <h3>
     Последние матчи комманды
 </h3>
@@ -36,6 +48,8 @@
         </tr>
     <?php endforeach ?>
 </table>
+
+<?php require BASE_DIR.'/view/'."pagination.view.php";?>
 
 <h3>
     Игроки комманды

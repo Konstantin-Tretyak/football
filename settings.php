@@ -12,6 +12,7 @@
             //       => ['class' => '\App\HomeController',  'method' => 'home'],
             //Openning pages
             '/'                    => ['file' =>'games_list.php', 'namespace' => 'Controllers\UserPages', 'function' => 'game_list_page', 'alias'=>'main'],
+            '/user'                => ['file' => 'user.php', 'namespace' => 'Controllers\UserPages', 'function' => 'user_page', 'alias'=>'user'],
             '/club'                => ['file' =>'club_page.php', 'namespace' => 'Controllers\UserPages', 'function' => 'club_page', 'alias'=>'club'],
             '/game'                => ['file' =>'game.php', 'namespace' => 'Controllers\UserPages', 'function' => 'game_page', 'alias'=>'game'],
             //Login/logout
@@ -317,5 +318,78 @@
             else
             throw new NotAuthorizedException(); 
         }
+
+        function is_user_club($id)
+        {
+            $user_teams = \UserTeam::query()->where("user_id=?",[get_authorized_user()['id']])->all();
+            if(!empty($user_teams))
+            foreach ($user_teams as $user_team)
+            {
+                if($user_team->team_id === $id)
+                    return true;
+            }
+
+            return false;
+        }
+
+        function get_pagination_page_number($page)
+        {
+            return $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        }
+
+function sgp($url, $varname, $value) // substitute get parameter
+{
+     if (is_array($varname))
+     {
+         foreach ($varname as $i => $n)
+         {
+            $v = (is_array($value))
+                  ? ( isset($value[$i]) ? $value[$i] : NULL ) 
+                  : $value;
+            $url = sgp($url, $n, $v);
+         }
+         return $url;
+     }
+     
+    preg_match('/^([^?]+)(\?.*?)?(#.*)?$/', $url, $matches);
+    $gp = (isset($matches[2])) ? $matches[2] : ''; // GET-parameters
+    //if (!$gp) return $url;
+    
+    $pattern = "/([?&])$varname=.*?(?=&|#|\z)/";
+    
+    if (preg_match($pattern, $gp))
+    {
+        $substitution = ($value !== '') ? "\${1}$varname=" . preg_quote($value) : '';
+        $newgp = preg_replace($pattern, $substitution, $gp); // new GET-parameters
+        $newgp = preg_replace('/^&/', '?', $newgp); 
+    }
+    else
+    {
+        $s = ($gp) ? '&' : '?';
+        $newgp = $gp.$s.$varname.'='.$value;
+    }
+   
+        $anchor = (isset($matches[3])) ? $matches[3] : '';
+        $newurl = $matches[1].$newgp.$anchor;
+        return $newurl;
+    }
+
+    // TODO: move this method to separate controller method
+    function subscribe_team()
+    {
+        validate_authorized();
+        ///TODO: как определить от какой кнопки пришёл запрос
+        //$user_team = \UserTeam::create(['team_id' => json_decode(file_get_contents("php://input"))->{'team_id'}, 'user_id' => get_authorized_user()['id']]);
+        if( $_POST['status']=="delete")
+        {
+            \UserTeam::delete('team_id', $_POST['team_id']);
+            return json_encode(['status'=>'deleted']);
+        }
+        else
+        {
+            $user_team = \UserTeam::create(['team_id' => $_POST['team_id'], 'user_id' => get_authorized_user()['id']]);
+            return json_encode($user_team->toArray());
+        }
+    }
 
     /* middlewares end */

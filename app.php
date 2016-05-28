@@ -37,10 +37,18 @@ function app_run() {
     }
     catch (WrongInputException $e)
     {
-        // TODO: for AJAX requests, work differently: return 400 code and array of errors
-        flash_set('old', $_POST);
-        flash_set('errors', $e->errors);
-        $response = redirect_back();
+        if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest')) {
+            $response = [
+                'code' => 422, 
+                'body' => json_encode($e->errors)
+            ];
+        }
+        else
+        {
+            flash_set('old', $_POST);
+            flash_set('errors', $e->errors);
+            $response = redirect_back(); 
+        }
     }
     catch (NotAllowedException $e)
     {
@@ -62,7 +70,6 @@ function app_run() {
 
     catch (Exception $e)
     {
-        // TODO: log 500 errors
         $body = (ENV == 'dev') ? "<pre>".$e->getMessage()."\n".$e->getTraceAsString()."</pre>" : view('errors/500');
         $response = ['code' => 500, 'body' => $body];
     }

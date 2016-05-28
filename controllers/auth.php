@@ -4,7 +4,6 @@ namespace Controllers\Auth;
 
 function login()
 {
-    // TODO: allow_only_guests middleware that passes only guests; authorized users should be redirected back
     if ( get_authorized_user() )
     {
         return redirect_back();
@@ -12,9 +11,7 @@ function login()
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-            // validate begin
-                validate_input($_POST, ['login', 'password']);
-            // validate end
+            validate_input($_POST, ['login', 'password']);
 
             if ( isset( $_POST['button_type'] ) && $_POST['button_type'] == "reg" )
             {
@@ -33,7 +30,6 @@ function login()
                 return redirect($redirect_url);
             }
             else {
-                // TODO: завести графу 'common', которую отображать в отдельном месте в начале формы
                 throw new \WrongInputException(['login' => 'Wrong login-password pair']);
             } 
 

@@ -20,14 +20,9 @@
         if ($_SERVER['REQUEST_METHOD'] == "POST")
         {
             validate_authorized();
-            validate_input($_POST, ['user', 'body']);
+            validate_input($_POST, ['body']);
 
-            $massive_data = $_POST;
-            $massive_data['game_id'] = $current_page;
-            $massive_data['date'] = date('Y-m-d H:i:s');
-
-
-            $comment = \Comment::create(['game_id' => $current_page, 'author_name' => $_POST['user'], 'date'=>date('Y-m-d H:i:s'), 'body'=>$_POST['body']]);
+            $comment = \Comment::create(['game_id' => $current_page, 'author_name' => get_authorized_user()['login'], 'date'=>date('Y-m-d H:i:s'), 'body'=>$_POST['body']]);
 
             if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))
             {
@@ -45,7 +40,7 @@
                                             where("games.id=?",[$current_page])->all()[0]->name;
 
         ///Взятие комментариев из БД
-        $data['comments'] = \Comment::query()->where('game_id = ?', [$current_page])->all();
+        $data['comments'] = \Comment::query()->where('game_id = ?', [$current_page])->order_by("date", "up")->all();
         foreach ($data['comments'] as $key => $value)
         {
             $data['comments'][$key] = $value->toArray();

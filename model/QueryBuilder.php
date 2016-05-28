@@ -50,7 +50,6 @@ class QueryBuilder
         return $this;
     }
 
-    /* TODO: allow multiple WHERE's */
     public function where($condition, $bindings)
     {
         ///???? Тут ищет первый попавшийся WHERE с учетом регитсра.
@@ -58,44 +57,51 @@ class QueryBuilder
         if (strpos($this->query, "WHERE") )
         {
             $this->query .= " AND $condition";
-            echo $this->query;
         }
         else
         {
-        $this->query .= " WHERE $condition";
+            $this->query .= " WHERE $condition";
         }
 
         $this->bindings = $bindings;
         return $this;
     }
 
-    /*public function conditionRow($condition, $bindings)
+    public function or_where($condition, $bindings)
     {
-        if ( strpos($condition, "WHERE") >= 0)
+        if (!strpos($this->query, "WHERE") )
         {
-            if( strripos($this->query, "select") === false )
-                return $this;
-            if( strripos($this->query, "WHERE") !== false)
-                str_replace("WHERE", "AND", $condition);
-        }
-        else if ( strpos($condition, "AND") === false or
-                  strpos($condition, "OR") === false )
-        {
-            $this->query .= " AND $condition";
+            $this->query .= " WHERE $condition";
         }
         else
         {
-            $this->query .= " $condition";
+            $this->query .= " OR $condition";
         }
 
-        echo $this->query;
         $this->bindings = $bindings;
         return $this;
-    }*/
+    }
 
-    public function order_by($order)
+    public function offset($value, $limit)
     {
-        $this->query .= " ORDER BY $order";
+        $this->query .= " LIMIT $value, $limit";
+
         return $this;
+    }
+
+    public function order_by($order, $direction="down")
+    {
+        if($direction=="up")
+            $direction="DESC";
+        else
+            $direction="ASC";
+
+        $this->query .= " ORDER BY $order $direction";
+        return $this;
+    }
+
+    public function count()
+    {
+        return count( $this->all() );
     }
 }

@@ -15,32 +15,9 @@
         {
             validate_input($_POST, ['home_team_id', 'guest_team_id', 'date']);
 
-            /*query_for_change("INSERT INTO games(home_team_id,guest_team_id,home_scores,guest_scores,date) 
-                              VALUES(:home_team_id,:guest_team_id,:home_scores,:guest_scores,:date)",
-                             array('home_team_id'=>$_POST['home_team_id'],'guest_team_id'=>$_POST['guest_team_id'],
-                                    'home_scores'=>$_POST['home_scores'],'guest_scores'=>$_POST['guest_scores'],
-                                    'date'=>$_POST['date']),
-                             connect());*/
-
             \Game::create(['home_team_id'=>$_POST['home_team_id'],'guest_team_id'=>$_POST['guest_team_id'],
                               'home_scores'=>$_POST['home_scores'],'guest_scores'=>$_POST['guest_scores'],
                               'date'=>$_POST['date']]);
-
-            //$data['teams'] = query("SELECT * FROM teams", array(), connect());
-
-            /*$user_data = query("SELECT user_email, user.team_id as user_team_id, teams.id as teams_id, teams.name as user_teams_name
-                                FROM user INNER JOIN teams ON user.team_id = teams.id
-                                WHERE teams.id=:home_team_id OR teams.id=:guest_team_id",
-                                array('home_team_id'=>$_POST['home_team_id'], 'guest_team_id'=>$_POST['guest_team_id']),
-                                connect());
-
-            $message['game_new'] = "Игра ".$data['teams'][$_POST['home_team_id']-1]['name']." - ".$data['teams'][$_POST['guest_team_id']-1]['name']." состоится ".$_POST['date'];
-
-            foreach ($user_data as $data)
-            {
-                $letter = create_Email_letter($data['user_email'], $message);
-                send_Email($letter);
-            }*/
 
             flash_set('message', $message_for_admin['games_new']);
 
@@ -65,29 +42,14 @@
         validate_authorized();
         validate_authorized_as_admin();
 
-        $data;
+        define('LIMIT_PAGE', 5);
 
-        $data['games'] = \Game::query()->all();
+        ///Work with DB content
 
-        foreach ($data['games'] as $key => $value)
-        {
-            $data['games'][$key] = $value->toArray();
-        }
+            $query_game = \Game::query();
+            $total_count = $query_game->count();
 
-        if ($_SERVER['REQUEST_METHOD'] == "GET")
-        {
-            ///namber of pagination
-
-        ///$pagin_numb inicialization
-            if ( isset($_GET['N']) )
-            {
-                $data['pagin_numb'] = (int) $_GET['N'];
-            }
-            else 
-            {
-                $data['pagin_numb'] = 1;
-            }
-        ///end $pagin_numb inicialization
+            $data['pagination'] = new \Pagination(LIMIT_PAGE, $total_count);
 
             ///Взятие игр и имен комманд из БД
             $team = new \Team;
@@ -98,9 +60,8 @@
             foreach ($temporary_data['last_games'] as $key => $value_game)
             {
                 $temporary_data['last_games'][$key] = $value_game->
-                            where('games.id>?', [LIMIT_VIEW_GAMES_INDEX_PAGE * ($data['pagin_numb'] - 1)])->
                             order_by('games.id')->
-                            limit(LIMIT_VIEW_GAMES_INDEX_PAGE)->
+                            offset(LIMIT_PAGE * ($data['pagination']->page - 1),LIMIT_PAGE)->
                             all();
 
                 $i = 0;
@@ -121,10 +82,6 @@
             }
 
             $data['last_games'] = $temporary_data['last_games'][0];
-        // Game::query()->limit(LIMIT_VIEW_GAMES_INDEX_PAGE)->offset(LIMIT_VIEW_GAMES_INDEX_PAGE * ($data['pagin_numb'] - 1))
-
-        // in view.php: $game->home_team->name
-        }
 
         return view('admin_games', $data, 'admin');
     }
