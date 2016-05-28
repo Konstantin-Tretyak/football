@@ -13,6 +13,8 @@ class QueryBuilder
         $_columns = [];
         foreach ($columnsToSelect as $table => $columns)
         {
+            if (empty($columns)) continue; 
+
             if ($columns == '*')
             {
                 $_columns[] = "$table.*";
@@ -63,7 +65,7 @@ class QueryBuilder
             $this->query .= " WHERE $condition";
         }
 
-        $this->bindings = $bindings;
+        $this->bindings = array_merge($this->bindings, $bindings);
         return $this;
     }
 
@@ -78,13 +80,13 @@ class QueryBuilder
             $this->query .= " OR $condition";
         }
 
-        $this->bindings = $bindings;
+        $this->bindings = array_merge($this->bindings, $bindings);
         return $this;
     }
 
-    public function offset($value, $limit)
+    public function offset($offset, $limit)
     {
-        $this->query .= " LIMIT $value, $limit";
+        $this->query .= " LIMIT $offset, $limit";
 
         return $this;
     }

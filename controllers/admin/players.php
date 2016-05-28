@@ -11,6 +11,18 @@
 
         $data = null;
 
+        $data['teams'] = \Team::query()->all();
+
+        foreach ($data['teams'] as $key => $value)
+        {
+            $data['teams'][$key] = $value->toArray();
+        }
+
+        return view('admin_players_new', $data, 'admin');
+    }
+
+    function create_entity()
+    {
         if ($_SERVER['REQUEST_METHOD'] == "POST")
         {
             validate_input($_POST, ['player_name', 'players_team_id']); 
@@ -34,17 +46,10 @@
                 }
             }*/
 
+            $message_for_admin = message_for_admin();
             flash_set('message', $message_for_admin['players_new']);
+            return redirect_back();
         }
-
-        $data['teams'] = \Team::query()->all();
-
-        foreach ($data['teams'] as $key => $value)
-        {
-            $data['teams'][$key] = $value->toArray();
-        }
-
-        return view('admin_players_new', $data, 'admin');
     }
 
     function edit()

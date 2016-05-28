@@ -2,7 +2,7 @@
     New player
 </h1>
 
-<form action="" method="post">
+<form action="<?php echo url(url_for('admin_players_create_entity')); ?>" method="post">
     <div class="form-group">
         <label for="player_name">Имя</label>
         <input type="text" class="form-control" name="player_name" id="player_name" placeholder="Введите имя" value="<?php if(isset($old['player_name'])) echo $old['player_name']; ?>">

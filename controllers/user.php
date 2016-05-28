@@ -1,9 +1,5 @@
 <?php
 
-    ////TODO: !!!??? Как делать автоматическую загрузку страницы - т.е. все время реагировать на все изменения на сервере
-    ////TODO: !!!??? Как делать, что заходишь к юзеру
-    ///TODO: !!!??? Если номер страницы не существует, то редирект на урл без гет-парметра номера страницы пагинации
-
     namespace Controllers\UserPages;
     
     function user_page()
@@ -27,8 +23,10 @@
 
         foreach ($user_teams_id as $user_team_id)
         {
-            $binding[] = $user_team_id->team_id;
-            $team_query = $team_query->or_where("id=?", $binding);
+            // $binding[] = $user_team_id->team_id;
+            // $team_query = $team_query->or_where("id=?", $binding);
+            $team_query = $team_query->or_where("id=?", [$user_team_id->team_id]);
+
         }
 
         $total_count = $team_query->count();

@@ -17,6 +17,7 @@
             }
         ///end $current_page inicialization
 
+        // TODO: move to Comments controller, create_entity method        
         if ($_SERVER['REQUEST_METHOD'] == "POST")
         {
             validate_authorized();

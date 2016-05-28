@@ -8,11 +8,15 @@ abstract class DbModel
     protected static $conn;
     protected static $primaryKey = 'id';
 
+    protected static $observers = [];
+
     public static function setConnection(PDO $conn)
     {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         self::$conn = $conn;        
     }
+
+
 
     public function fill(array $attributes)
     {
@@ -56,6 +60,11 @@ abstract class DbModel
     public function getIdName()
     {
         return isset($this->{self::getPrimaryKeyName()}) ? $this->{self::getPrimaryKeyName()} : null;
+    }
+
+    public function id()
+    {
+        return $this->getIdName();
     }
 
     public function getColumnNames()
@@ -114,10 +123,12 @@ abstract class DbModel
         if ($this->isNew())
         {
             $this->insertQuery();
+            $this->afterCreate();
         }
         else
         {
             $this->updateQuery();
+            $this->afterUpdate();
         }
         return $this;
     }
@@ -189,6 +200,17 @@ abstract class DbModel
         return $query->where("$slaveTable.$slaveForeignKey = $localTable.$localKey  AND `$localTable`.`$localKey` = ? ", [$this->{$localKey}]); //???Здесь не понятно
     }
 
+    public function hasManyThrough($slaveClass, $middleClass, $middleToSlaveKey, $middleToLocalKey)
+    {
+        $slaveTable = $slaveClass::getTableName();
+        $middleTable = $middleClass::getTableName();
+
+        $query = new QueryBuilder(self::$conn, [$slaveTable => '*', $middleTable => null], $slaveClass);
+        $query->where("$slaveTable.id = $middleTable.$middleToSlaveKey AND $middleTable.$middleToLocalKey = ?", [$this->id()]);
+
+        return $query;
+    }
+
     public function belongsTo($masterClass, $localKey, $masterForeignKey)
     {
         // TODO: automatically guess $masterForeignKey and $localKey (guess standard column names)
@@ -197,4 +219,32 @@ abstract class DbModel
         $query = new QueryBuilder(self::$conn, [$masterTable => '*', $localTable => '*'], $masterClass);
         return $query->where("`$localTable`.`$localKey` = `$masterTable`.`$masterForeignKey` AND `$masterTable`.`$masterForeignKey` = ?", [$this->{$localKey}]);
     }
+
+    public static function afterCreateObserver($observer)
+    {
+        self::$observers['afterCreate'][] = $observer;
+    }
+
+    public static function afterUpdateObserver($observer)
+    {
+        self::$observers['afterUpdate'][] = $observer;
+    }
+
+    public function afterCreate() {
+        $this->dispatchEvent('afterCreate');
+    }
+
+    public function afterUpdate() {
+        $this->dispatchEvent('afterUpdate');
+    }
+
+    protected function dispatchEvent($event) {
+        if (isset(self::$observers[$event])) {
+            $observers = self::$observers[$event];
+            foreach ($observers as $observer) {
+                $observer($this);
+            }
+        }
+    }
+
 }

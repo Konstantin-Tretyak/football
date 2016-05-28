@@ -31,6 +31,7 @@
             '/admin/games/index'   => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'index',   'alias'=>'admin_games'],
             
             '/admin/players/new'   => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'create', 'alias'=>'admin_players_new'],
+            '/admin/players/create_entity' => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'create_entity', 'alias'=>'admin_players_create_entity'],
             '/admin/players/edit'  => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'edit', 'alias'=>'admin_players_edit'],
         ];
     }
@@ -97,6 +98,7 @@
         echo flash_get('message');
 
         $data['authorized_user'] = get_authorized_user();
+        $data['current_user'] = get_auth_user();
 
         $data['old'] = flash_get('old');
 
@@ -295,6 +297,14 @@
         return null;
     }
 
+    // TODO: use this instead of get_authorized_user
+    function get_auth_user() {
+        if (!empty($_SESSION['user'])) {
+            return \User::find($_SESSION['user']['id']);
+        }
+        return null;
+    }
+
     /* middlewares begin */
         function validate_authorized()
         {
@@ -392,4 +402,7 @@ function sgp($url, $varname, $value) // substitute get parameter
         }
     }
 
+    function dd($var) {
+        var_dump($var);die();
+    }
     /* middlewares end */

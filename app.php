@@ -1,16 +1,33 @@
 <?php
 
+
+require __DIR__.'/settings.php';
+require __DIR__.'/Autoloading.php';
+
+$connection_string = "mysql:host=localhost;dbname=foot";
+$user = 'root';
+$password = '';
+$conn = new PDO($connection_string, $user, $password);
+
+DbModel::setConnection($conn);
+
+Game::afterCreateObserver(function($game) {
+    echo 'created <br/>';
+
+    $message = "Игра ".$game->home_team()->first()->name." - ".$game->guest_team()->first()->name." состоится ".$game->date;
+
+    $users = array_merge($game->home_team()->first()->users_subscribed()->all(),
+                         $game->guest_team()->first()->users_subscribed()->all());
+    foreach($users as $user) {
+        // $letter = create_Email_letter($user->login, $message);
+        // send_Email($letter);
+        echo "Sending to user '{$user->login}' email with contents: <pre>$message</pre><br/>";
+    }        
+});
+
+Game::find(1)->save();
+
 function app_run() {
-    require __DIR__.'/settings.php';
-    require __DIR__.'/Autoloading.php';
-
-    $connection_string = "mysql:host=localhost;dbname=foot";
-    $user = 'root';
-    $password = '';
-    $conn = new PDO($connection_string, $user, $password);
-
-    DbModel::setConnection($conn);
-
     try
     {
         $route = get_route();
@@ -37,7 +54,7 @@ function app_run() {
     }
     catch (WrongInputException $e)
     {
-        if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest')) {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))) {
             $response = [
                 'code' => 422, 
                 'body' => json_encode($e->errors)
@@ -56,7 +73,7 @@ function app_run() {
     }
     catch (NotAuthorizedException $e)
     {
-        if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest')) {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))) {
             $response = [
                 'code' => 403, 
                 'body' => json_encode(['error' => 'You are not signed in. Please, sign in and refresh the page'])

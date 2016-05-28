@@ -21,7 +21,14 @@ class Team extends DbModel
 
     public function games()
     {
-        return array_merge($this->games_as_guest()->all(), $this->games_as_home()->all());
+        $slaveClass = 'Game';
+        $localKey = 'id';
+
+        $localTable = self::getTableName();
+        $slaveTable = $slaveClass::getTableName();
+
+        $query = new QueryBuilder(self::$conn, [$slaveTable => '*'], $slaveClass);
+        return $query->where("home_team_id = ? OR guest_team_id = ? ", [$this->{$localKey}, $this->{$localKey}]);
     }
 
     public function games_as_home()
@@ -34,5 +41,9 @@ class Team extends DbModel
         return ($this->hasMany('Game', 'guest_team_id', 'id'));
     }  
 
+    public function users_subscribed()
+    {
+        return $this->hasManyThrough('User', 'UserTeam', 'user_id', 'team_id');
+    }
 
 }
