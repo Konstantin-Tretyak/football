@@ -60,47 +60,6 @@
                     );
     }
 
-    ///DATA BASE
-
-    $another_page = false;
-
-    function connect()
-    {
-        $config = array('username' => 'root',
-                        'password' => '');
-
-        $conn = new PDO('mysql:host=localhost;dbname=foot',
-                        $config['username'],
-                        $config['password']);
-
-        return $conn;
-    }
-
-    function query($query, $bindings, $conn)
-    {
-        $statement = $conn->prepare($query);
-        $statement->execute($bindings);
-
-        return $statement->fetchAll();
-    }
-
-    function query_for_change($query, $bindings, $conn)
-    {
-        $statement = $conn->prepare($query);
-        $statement->execute($bindings);
-
-        return $statement->fetchAll();
-    }
-
-    function get_by_id($id, $tableName , $conn)
-    {
-        return query("SELECT * FROM $tableName WHERE id = :id",
-                    array('id' => $id),
-                    $conn);
-    }
-
-    ////end DATA BASE
-
     ///work with page
     // TODO: remove $catalogue
     function view($path, $data = null, $catalogue="")
@@ -138,18 +97,7 @@
     ///end admin view
     ///end work with page
 
-    ///JSON function
-    function creat_JSON_file($json_string, $file_name)
-    {
-        $handle = fopen($file_name, "w+");
-
-        fwrite($handle, $json_string);
-
-        fclose($handle);
-    }
-    ///End JSON function
-
-    ///Email gag
+    ///Email stubs
 
     function create_Email_letter($user, $letter)
     {
@@ -177,10 +125,7 @@
         fclose($handle);
 
     }
-    ///End Email gag
-
-    ///constant
-    define('LIMIT_VIEW_GAMES_INDEX_PAGE', 5);
+    ///End Email stubs
 
     function url($path)
     {
@@ -353,38 +298,38 @@
             return $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         }
 
-function sgp($url, $varname, $value) // substitute get parameter
-{
-     if (is_array($varname))
-     {
-         foreach ($varname as $i => $n)
+    function sgp($url, $varname, $value) // substitute get parameter
+    {
+         if (is_array($varname))
          {
-            $v = (is_array($value))
-                  ? ( isset($value[$i]) ? $value[$i] : NULL ) 
-                  : $value;
-            $url = sgp($url, $n, $v);
+             foreach ($varname as $i => $n)
+             {
+                $v = (is_array($value))
+                      ? ( isset($value[$i]) ? $value[$i] : NULL ) 
+                      : $value;
+                $url = sgp($url, $n, $v);
+             }
+             return $url;
          }
-         return $url;
-     }
-     
-    preg_match('/^([^?]+)(\?.*?)?(#.*)?$/', $url, $matches);
-    $gp = (isset($matches[2])) ? $matches[2] : ''; // GET-parameters
-    //if (!$gp) return $url;
-    
-    $pattern = "/([?&])$varname=.*?(?=&|#|\z)/";
-    
-    if (preg_match($pattern, $gp))
-    {
-        $substitution = ($value !== '') ? "\${1}$varname=" . preg_quote($value) : '';
-        $newgp = preg_replace($pattern, $substitution, $gp); // new GET-parameters
-        $newgp = preg_replace('/^&/', '?', $newgp); 
-    }
-    else
-    {
-        $s = ($gp) ? '&' : '?';
-        $newgp = $gp.$s.$varname.'='.$value;
-    }
-   
+         
+        preg_match('/^([^?]+)(\?.*?)?(#.*)?$/', $url, $matches);
+        $gp = (isset($matches[2])) ? $matches[2] : ''; // GET-parameters
+        //if (!$gp) return $url;
+        
+        $pattern = "/([?&])$varname=.*?(?=&|#|\z)/";
+        
+        if (preg_match($pattern, $gp))
+        {
+            $substitution = ($value !== '') ? "\${1}$varname=" . preg_quote($value) : '';
+            $newgp = preg_replace($pattern, $substitution, $gp); // new GET-parameters
+            $newgp = preg_replace('/^&/', '?', $newgp); 
+        }
+        else
+        {
+            $s = ($gp) ? '&' : '?';
+            $newgp = $gp.$s.$varname.'='.$value;
+        }
+       
         $anchor = (isset($matches[3])) ? $matches[3] : '';
         $newurl = $matches[1].$newgp.$anchor;
         return $newurl;
