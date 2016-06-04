@@ -12,7 +12,7 @@
     <body>
         <header>
             <nav class="navbar navbar-default">
-              <div class="container-fluid">
+              <div class="container">
                 <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
@@ -20,7 +20,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="<?php echo url(url_for('main')) ?>">My football</a>
+                  <a class="navbar-brand" href="<?php echo url(url_for('main')) ?>">My football - админ панель</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,9 +35,11 @@
             </nav>        
         </header>        
 
-        <?php
-            include($path);
-        ?>
+        <div class="container">
+            <div class="col-md-8 col-md-offset-2">
+                <?php include($path); ?>
+            </div>
+        </div>
 
         <script src="<?php echo url('/scripts/jquery-1.12.1.js'); ?>"></script>        
         <script src="<?php echo url('/scripts/bootstrap.js'); ?>"></script>

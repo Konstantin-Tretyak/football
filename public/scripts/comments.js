@@ -20,13 +20,20 @@ $(document).ready
                             ///TODO: Delete errors when it's all right
 
                             var msg = $("<li></li>");
-                            msg.append("<h3>"+result.author_name+"</h3>");
-                            msg.append("<h4>"+result.body+"</h4>");
-                            msg.append("<p>"+result.date+"</p>");
 
+                            msg.append(`
+                                <p>
+                                    <span class="glyphicon glyphicon-comment margin-right-10"></span>
+                                    `+result.author_name+` в <i>`+result.date+`</i>
+                                </p>
+                                <blockquote>
+                                    `+result.body.replace(/([^>])\n/g, '$1<br/>')+`
+                                </blockquote>
+                                <hr>                                
+                            `);
                             $(".comments").prepend(msg);
 
-                            notify('You are created comment', 'success');
+                            notify('You have successfully created a comment', 'success');
                         },
                         error: function ( jqXHR )
                         {

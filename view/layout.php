@@ -7,7 +7,6 @@
         <meta charset="utf-8">
 
         <link rel="stylesheet" href="<?php echo url('/css/bootstrap.css'); ?>">
-        <!-- <META HTTP-EQUIV="REFRESH" CONTENT="1"> -->
         <link rel="stylesheet" href="<?php echo url('/css/main.css'); ?>">
         <link rel="stylesheet" href="<?php echo url('/css/whirl.css'); ?>">
         <link rel="stylesheet" href="<?php echo url('/css/pnotify.custom.min.css'); ?>">
@@ -29,8 +28,12 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-right">
-                    <?php if ($authorized_user): ?>
+                    <li><a href="<?php echo url(url_for('main')) ?>">Матчи</a></li>
+                    <?php if ($current_user): ?>
                         <li><a href="<?php echo url(url_for('user')) ?>">Мои команды</a></li>
+                        <?php if ($current_user->is_admin): ?>
+                            <li><a href="<?php echo url(url_for('admin')) ?>">Админ панель</a></li>
+                        <?php endif; ?>                    
                         <li><a href="<?php echo url(url_for('logout')) ?>">Выйти</a></li>
                     <?php else: ?>
                         <li><a href="<?php echo url(url_for('login')) ?>">Войти</a></li>
