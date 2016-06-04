@@ -11,14 +11,16 @@
         }
       ?>
     </li>
-    <?php for ($i=1; $i<=$pagination->pages_quantity(); $i++): ?>
-        <li>
-            <a href="http://<?php echo $_SERVER['HTTP_HOST'].sgp($_SERVER['REQUEST_URI'],'N',$i );?>" 
-                <?php if($i==$pagination->page) echo 'style="color: red;"'?>>
-                <?php echo ($i); ?>
-            </a>
-        </li>
-    <?php endfor; ?>
+    <?php if ($pagination->pages_quantity() > 1): ?>
+        <?php for ($i=1; $i<=$pagination->pages_quantity(); $i++): ?>
+            <li <?php if($i==$pagination->page) echo 'class="active"'; ?> >
+                    
+                <a href="http://<?php echo $_SERVER['HTTP_HOST'].sgp($_SERVER['REQUEST_URI'],'N',$i );?>" >
+                    <?php echo ($i); ?>
+                </a>
+            </li>
+        <?php endfor; ?>
+    <?php endif; ?>
     <li>
 
       <?php 

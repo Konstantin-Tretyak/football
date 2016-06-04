@@ -7,68 +7,39 @@
         <meta charset="utf-8">
 
         <link rel="stylesheet" href="<?php echo url('/css/bootstrap.css'); ?>">
-        <link rel="stylesheet" href="<?php echo url('/css/css.css'); ?>">
+        <link rel="stylesheet" href="<?php echo url('/css/main.css'); ?>">
     </head>
     <body>
         <header>
-            <?php if ($authorized_user): ?>
-                Hello юзер <?php echo $authorized_user['login']; ?> ! <br/>
-                <a href="<?php echo url(url_for('logout')) ?>">Logout</a>
-            <?php else: ?>
-                    Hello, гость!
-                    <a href="<?php echo url(url_for('login')) ?>">Login</a>
-            <?php endif; ?>
-        </header>
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="<?php echo url(url_for('main')) ?>">My football</a>
+                </div>
 
-        <ul class="list-inline">
-            <li>
-                    Teams
-                </a>
-                <ul>
-                    <li>
-
-                        <a href="<?php echo url_for('admin_teams'); ?>">
-                            Edit Teams
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo url_for('admin_teams_new'); ?>">
-                            Create New Team
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                    Games
-                </a>
-                <ul>
-                    <li>
-                        <a href="<?php echo url_for('admin_games'); ?>">
-                            Edit Games
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo url_for('admin_games_new'); ?>">
-                            Create Games
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                Players
-                <ul>
-                    <li>
-                        <a href="<?php echo url_for('admin_players_new'); ?>">
-                            Create Player
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="<?php echo url(url_for('admin_teams')) ?>">Команды</a></li>
+                    <li><a href="<?php echo url(url_for('admin_games')) ?>">Матчи</a></li>
+                    <li><a href="<?php echo url(url_for('admin_players_new')) ?>">Создать игрока</a></li>
+                    <li><a href="<?php echo url(url_for('logout')) ?>">Выйти</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>        
+        </header>        
 
         <?php
             include($path);
         ?>
 
+        <script src="<?php echo url('/scripts/jquery-1.12.1.js'); ?>"></script>        
+        <script src="<?php echo url('/scripts/bootstrap.js'); ?>"></script>
     </body>
 </html>

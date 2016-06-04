@@ -1,17 +1,14 @@
-<h1>
-    Главная страница. Главнее не бывает.
-</h1>
-
-<h2>
-    Матчи
-</h2>
+<h1>Матчи</h1>
 
 <table class="table table-striped">
     <?php foreach ($games as $game): ?>
+
         <tr>
             <td><?php echo $game->date ?></td>
             <td>
-                <img src="<?php echo url($game->home_team()->first()->logo) ?>" height="20px">
+                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->home_team()->first()->id); ?>">
+                    <img src="<?php echo url($game->home_team()->first()->logo ? $game->home_team()->first()->logo : '/img/team-placeholder.png') ?>" height="30px">
+                </a>
             </td>
             <td>
                 <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->home_team()->first()->id); ?>">
@@ -19,27 +16,12 @@
                 </a>
             </td>
             <td>
-                <form action="<?php echo url_for('subscribe_team'); ?>" class="subscribe" method="post">
-                    <button type="submit" class="
-                    <?php
-                        // TODO
-                        if ( $current_user && $current_user->is_subscribed_to_team($game->home_team()->first()->id) )
-                            echo "btn btn-danger";
-                        else
-                            echo "btn btn-primary";
-                    ?>"
-                    id="<?php echo ($game->home_team()->first()->id); ?>" data-toggle="modal_users_like" data-target=".bs-example-modal-lg">
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                    </button>
-                </form>
-            </td>              
-            <td>
                 <a href="<?php echo url_for('game'); ?>?game=<?php echo ($game->id); ?>">
                     <?php 
                     if ( strtotime($game->date) <= strtotime(date('y-m-d')) )
                         echo $game->home_scores." - ".$game->guest_scores;
                     else
-                        echo "Матч ещё не начался";
+                        echo "- : -";
                     ?>
                 </a>
                 </a>
@@ -50,23 +32,12 @@
                 </a>
             </td>
             <td>
-                <img src="<?php echo url($game->guest_team()->first()->logo) ?>" height="20px">
+                    <big>
+                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->guest_team()->first()->id); ?>">
+                    <img src="<?php echo url($game->guest_team()->first()->logo ? $game->guest_team()->first()->logo : '/img/team-placeholder.png') ?>" height="30px">
+                </a>
+                </big>
             </td>
-            <td>
-
-                <form action="<?php echo url_for('subscribe_team'); ?>" class="subscribe" method="post">
-                    <button type="submit" class="
-                    <?php
-                        if ( $current_user && $current_user->is_subscribed_to_team($game->guest_team()->first()->id) )
-                            echo "btn btn-danger";
-                        else
-                            echo "btn btn-primary";
-                    ?>"
-                    id="<?php echo ($game->guest_team()->first()->id); ?>" data-toggle="modal_users_like" data-target=".bs-example-modal-lg">
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                    </button>
-                </form>
-            </td>            
         </tr>
     <?php endforeach ?>
 </table>
