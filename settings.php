@@ -325,13 +325,14 @@
 
             if ($user)
             {
-                if ($user['status'] != 'admin')
+                if (!$user['is_admin'])
                 {
                     throw new NotAllowedException();
                 }
             }
-            else
-            throw new NotAuthorizedException(); 
+            else {
+                throw new NotAuthorizedException(); 
+            }
         }
 
         function is_user_club($id)

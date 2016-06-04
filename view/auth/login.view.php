@@ -17,5 +17,5 @@
     </div>
 
     <button class="btn btn-default" type="submit">Войти</button>
-    <button class="btn btn-default" type="submit" name="button_type" value="reg">Регистрация</button>
+    <button class="btn btn-default" type="submit" name="action" value="register">Зарегистрироваться</button>
 </form>
