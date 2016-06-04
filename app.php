@@ -11,21 +11,49 @@ $conn = new PDO($connection_string, $user, $password);
 
 DbModel::setConnection($conn);
 
-Game::afterCreateObserver(function($game) {
-    echo 'created <br/>';
+// TODO:  Fatal error: Call to undefined method Player::home_team() in D:\xampp\htdocs\football_with_controllers\app.php on line 17 это при доблении нового игрока - то есть не там срабатывает. Как определить, какой метод класс мне нужен. Как проверить существование метода или свойства у объекта?
+Game::afterCreateObserver(function($game)
+{
+        $message = "Игра ".$game->home_team()->first()->name." - ".$game->guest_team()->first()->name." состоится ".$game->date;
 
-    $message = "Игра ".$game->home_team()->first()->name." - ".$game->guest_team()->first()->name." состоится ".$game->date;
-
-    $users = array_merge($game->home_team()->first()->users_subscribed()->all(),
-                         $game->guest_team()->first()->users_subscribed()->all());
-    foreach($users as $user) {
-        // $letter = create_Email_letter($user->login, $message);
-        // send_Email($letter);
-        echo "Sending to user '{$user->login}' email with contents: <pre>$message</pre><br/>";
-    }        
+        $users = array_merge($game->home_team()->first()->users_subscribed()->all(),
+                             $game->guest_team()->first()->users_subscribed()->all());
+        foreach($users as $user)
+        {
+            send_Email(create_Email_letter($user->login, $message));
+        }      
 });
 
-Game::find(1)->save();
+Player::afterUpdateObserver(function($player)
+{    
+        if( $player->original_data->team_id != $player->team_id )
+        {
+            $message = "Игрок ".$player->name." перешел из ".\Team::find($player->original_data->team_id)->name." в ".\Team::find($player->team_id)->name;
+        }
+
+        $users = array_merge(\Team::find($player->original_data->team_id)->users_subscribed()->all(),
+                             \Team::find($player->team_id)->users_subscribed()->all());
+
+        foreach($users as $user)
+        {
+            send_Email(create_Email_letter($user->login, $message));
+        }
+});
+
+
+Player::afterCreateObserver(function($player)
+{
+        $message = "Игрок ".$player->name." появился в команде ".\Team::find($player->team_id)->name;
+
+        $users = \Team::find($player->team_id)->users_subscribed()->all();
+
+        foreach($users as $user)
+        {
+            send_Email(create_Email_letter($user->login, $message));
+        } 
+});
+
+//Game::find(1)->save();
 
 function app_run() {
     try
@@ -50,7 +78,7 @@ function app_run() {
     }
     catch (NotFoundException $e)
     {
-        $response = ['code' => 404, 'body' => $body];
+        $response = ['code' => 404, 'body' => view('errors/404')];
     }
     catch (WrongInputException $e)
     {
@@ -87,8 +115,17 @@ function app_run() {
 
     catch (Exception $e)
     {
-        $body = (ENV == 'dev') ? "<pre>".$e->getMessage()."\n".$e->getTraceAsString()."</pre>" : view('errors/500');
-        $response = ['code' => 500, 'body' => $body];
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))) {
+            $error = (ENV == 'dev') ? $e->getMessage()."\n".$e->getTraceAsString() : 'Sorry, some error occured';
+            $response = [
+                'code' => 500, 
+                'body' => json_encode(['error' => $error])
+            ];
+        }
+        else {
+            $body = (ENV == 'dev') ? "<pre>".$e->getMessage()."\n".$e->getTraceAsString()."</pre>" : view('errors/500');
+            $response = ['code' => 500, 'body' => $body];
+        }        
     }
 
     return $response;

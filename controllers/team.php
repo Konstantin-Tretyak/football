@@ -1,23 +1,17 @@
 <?php
-    namespace Controllers\UserPages;
+    namespace Controllers\Team;
 
-    function club_page()
+    function show()
     {
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))
-        {
-            return subscribe_team();
-        }
-
         define('LIMIT_PAGE', 5);
 
-        // TODO: не просто проверять isset , а наличие такого club_id в БД
         if ( isset($_GET['club_id']) && is_numeric($_GET['club_id']) )
         {
             $id = $_GET['club_id'];
         }
         else
         {
-            throw new NotFoundException();
+            throw new \NotFoundException();
         }
 
         $page = 1;
@@ -30,7 +24,10 @@
             }
         }
         
-        $team = \Team::find($id);
+        if (!($team = \Team::find($id))) {
+            throw new \NotFoundException();
+        }
+
         $query = $team->games()->order_by('date', 'up');
         $total_count = $query->count();
 
@@ -44,3 +41,22 @@
 
         return view('club_page', compact('team', 'games', 'pagination'));
     }
+
+    function subscribe()
+    {   
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))
+        {
+            validate_authorized();
+
+            if( $_POST['status'] == "delete" )
+            {
+                \UserTeam::delete('team_id', $_POST['team_id']);
+                return json_encode(['status'=>'deleted']);
+            }
+            else
+            {
+                $user_team = \UserTeam::create(['team_id' => $_POST['team_id'], 'user_id' => get_authorized_user()['id']]);
+                return json_encode($user_team->toArray());
+            }
+        }
+    }    

@@ -1,51 +1,51 @@
 <?php
     
-    namespace Controllers\UserPages;
+    namespace Controllers\Game;
 
-    function game_page()
+    function show()
     {
-        $data = null;
-        ///$current_page inicialization
-
-            if ( isset($_GET['game']) && is_numeric($_GET['game']) )
-            {
-                $current_page = (int) $_GET['game'];
-            }
-            else 
-            {
-                throw new NotFoundException();
-            }
-        ///end $current_page inicialization
-
-        // TODO: move to Comments controller, create_entity method        
-        if ($_SERVER['REQUEST_METHOD'] == "POST")
+        if ( isset($_GET['game']) && is_numeric($_GET['game']) )
         {
-            validate_authorized();
-            validate_input($_POST, ['body']);
-
-            $comment = \Comment::create(['game_id' => $current_page, 'author_name' => get_authorized_user()['login'], 'date'=>date('Y-m-d H:i:s'), 'body'=>$_POST['body']]);
-
-            if (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))
-            {
-                return json_encode($comment->toArray());
-            }
-            
+            $id = (int) $_GET['game'];
+        }
+        else 
+        {
+            throw new NotFoundException();
         }
 
-        ///Взятие игр и имен комманд из БД
-        $team = new \Team;
-        $data['game'] = \Game::query()->all()[$current_page-1]->toArray();
-        $data['game']['home_team_name'] = $team->homeTeamName()->
-                                            where("games.id=?",[$current_page])->all()[0]->name;
-        $data['game']['guest_team_name'] = $team->guestTeamName()->
-                                            where("games.id=?",[$current_page])->all()[0]->name;
+        if (!($game = \Game::find($id))) {
+            throw new \NotFoundException();
+        }        
+        $comments = \Comment::query()->where('game_id = ?', [$id])->order_by("date", "up")->all();
+        
+        return view('game', compact('game', 'comments'));
+    }
 
-        ///Взятие комментариев из БД
-        $data['comments'] = \Comment::query()->where('game_id = ?', [$current_page])->order_by("date", "up")->all();
-        foreach ($data['comments'] as $key => $value)
-        {
-            $data['comments'][$key] = $value->toArray();
+    function index()
+    {
+        define('LIMIT_PAGE', 5);
+
+        $page = 1;
+        if (isset($_GET['N'])) {
+            if (is_numeric($_GET['N'])) {
+                $page = $_GET['N'];
+            }
+            else {
+                return redirect(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
+            }
         }
         
-        return view('game', $data);
+        $query = \Game::query()->order_by('date', 'up');
+        $total_count = $query->count();
+
+        $pagination = new \Pagination(LIMIT_PAGE, $total_count, $page);
+
+        if ($page > $pagination->pages_quantity())
+        {
+            return redirect(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
+        }
+
+        $games = $query->offset(LIMIT_PAGE * ($page - 1),LIMIT_PAGE)->all();
+
+        return view('games_list', compact('games', 'pagination'));
     }

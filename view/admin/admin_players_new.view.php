@@ -19,8 +19,8 @@
             <option>
             </option>
             <?php foreach ($teams as $team): ?>
-                <option value="<?php echo $team['id']; ?>"<?php if(isset($old['players_team_id']) && $team['id'] == $old['players_team_id']) echo "selected" ?>>
-                    <?php echo $team['name']; ?>
+                <option value="<?php echo $team->id; ?>"<?php if(isset($old['players_team_id']) && $team->id == $old['players_team_id']) echo "selected" ?>>
+                    <?php echo $team->name; ?>
                 </option>
             <?php endforeach; ?>
         <select>

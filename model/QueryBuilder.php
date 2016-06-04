@@ -37,7 +37,8 @@ class QueryBuilder
         $statement = $this->conn->prepare($this->query);
         $statement->execute($this->bindings);
 
-        return $statement->fetchAll(PDO::FETCH_CLASS, $this->resultClass);
+        $result = $statement->fetchAll(PDO::FETCH_CLASS, $this->resultClass);
+        return $result;
     }
 
     public function first()

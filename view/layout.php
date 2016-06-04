@@ -21,6 +21,13 @@
                     <a href="<?php echo url(url_for('login')) ?>">Login</a>
             <?php endif; ?>
         </header>
+        <?php if ($authorized_user): ?>
+            <h3>
+                <a href="<?php echo url(url_for('user')) ?>">
+                    My page
+                </a>
+            </h3>
+        <?php endif; ?>
         <?php
             include($path);
         ?>

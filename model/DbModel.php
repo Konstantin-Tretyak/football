@@ -8,7 +8,7 @@ abstract class DbModel
     protected static $conn;
     protected static $primaryKey = 'id';
 
-    protected static $observers = [];
+    public static $observers = [];
 
     public static function setConnection(PDO $conn)
     {
@@ -103,6 +103,7 @@ abstract class DbModel
 
     public function update(Array $attributes)
     {
+        $this->original_data = clone $this;
         $this->fill($attributes)->save();
         return $this;
     }
@@ -113,7 +114,6 @@ abstract class DbModel
                         self::getTableName(),
                         $deleting);
 
-        //echo $sql;
         self::$conn->prepare($sql)->execute([$number]);
         //$this->{self::getPrimaryKeyName()} = null;
     }
@@ -152,7 +152,6 @@ abstract class DbModel
             if ($column == "update_date" or $column == "create_date")
             {
                 $value = date('Y-m-d h:i:s');
-                echo $value;
             }
             $columns[] = sprintf('`%s`', $column);
             ///Может быть $bindings - лишний
@@ -179,7 +178,6 @@ abstract class DbModel
             if ($column == "update_date")
             {
                 $value = date('Y-m-d h:i:s');
-                echo $value;
             }
             $updates[] = sprintf('%s = ?', $column);
             $values[] = $value;
@@ -188,7 +186,6 @@ abstract class DbModel
         $values[] = $this->getIdName();
 
         $sql = sprintf("UPDATE %s SET %s WHERE %s = ?", self::getTableName(), join(',', $updates), self::getPrimaryKeyName());
-        echo $sql;
         self::$conn->prepare($sql)->execute($values);
     }
 
@@ -222,26 +219,34 @@ abstract class DbModel
 
     public static function afterCreateObserver($observer)
     {
-        self::$observers['afterCreate'][] = $observer;
+        $currentClass = get_called_class();
+        self::$observers[$currentClass]['afterCreate'][] = $observer;
     }
 
     public static function afterUpdateObserver($observer)
     {
-        self::$observers['afterUpdate'][] = $observer;
+        $currentClass = get_called_class();
+        self::$observers[$currentClass]['afterUpdate'][] = $observer;
     }
 
-    public function afterCreate() {
+    public function afterCreate()
+    {
         $this->dispatchEvent('afterCreate');
     }
 
-    public function afterUpdate() {
+    public function afterUpdate()
+    {
         $this->dispatchEvent('afterUpdate');
     }
 
-    protected function dispatchEvent($event) {
-        if (isset(self::$observers[$event])) {
-            $observers = self::$observers[$event];
-            foreach ($observers as $observer) {
+    protected function dispatchEvent($event)
+    {
+        $currentClass = get_called_class();
+        if (isset(self::$observers[$currentClass][$event]))
+        {
+            $observers = self::$observers[$currentClass][$event];
+            foreach ($observers as $observer)
+            {
                 $observer($this);
             }
         }

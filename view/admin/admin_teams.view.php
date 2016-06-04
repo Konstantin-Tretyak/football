@@ -5,15 +5,15 @@
 <a href="new"><button class="btn btn-default">New Team</button></a>
 
 <table>
-    <?php foreach($teams as $team): ?>
+    <?php foreach(\Team::query()->all() as $team): ?>
         <tr>
             <td>
-                <a href="../../club?club_id=<?php echo ($team['id']); ?>">
-                    <?php echo $team['name']; ?>
+                <a href="../../club?club_id=<?php echo $team->id; ?>">
+                    <?php echo $team->name; ?>
                 </a>
             </td>
             <td>
-                <a href="edit?club_id=<?php echo $team['id'] ?>">
+                <a href="edit?club_id=<?php echo $team->id ?>">
                     Edit
                 </a>
             </td>

@@ -5,31 +5,32 @@
 <a href="../games/new"><button>New Game</button></a>
 
 <table class="table table-striped">
-    <?php foreach ($last_games as $last_game): ?>
+    <?php foreach ($games as $game): ?>
         <tr>
-            <td><?php echo $last_game['date'] ?></td>
+            <td><?php echo $game->date ?></td>
             <td>
-                <a href="<?php echo url(url_for('admin_teams_edit')); ?>?club_id=<?php echo ($last_game['home_team_id']); ?>">
-                    <?php echo $last_game['home_team_name'] ?>
+                <a href="<?php echo url(url_for('admin_teams_edit')); ?>?club_id=<?php echo ($game->home_team()->first()->id); ?>">
+                    <?php echo $game->home_team()->first()->name ?>
                 </a>
-            </td>
+            </td>            
             <td>
-                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['id']); ?>">
+                <a href="<?php echo url_for('game'); ?>?game=<?php echo ($game->id); ?>">
                     <?php 
-                    if ( strtotime($last_game['date']) <= strtotime(date('y-m-d')) )
-                        echo $last_game['home_scores']." - ".$last_game['guest_scores'];
+                    if ( strtotime($game->date) <= strtotime(date('y-m-d')) )
+                        echo $game->home_scores." - ".$game->guest_scores;
                     else
                         echo "Матч ещё не начался";
                     ?>
                 </a>
-            </td>
-            <td>
-                <a href="<?php echo url(url_for('admin_teams_edit')); ?>?club_id=<?php echo ($last_game['guest_team_id']); ?>">
-                    <?php echo $last_game['guest_team_name'] ?>
                 </a>
             </td>
             <td>
-                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($last_game['id']); ?>">
+                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->guest_team()->first()->id); ?>">
+                    <?php echo $game->guest_team()->first()->name ?></td>
+                </a>
+            </td>
+            <td>
+                <a href="<?php echo url(url_for('admin_games_edit')); ?>?game=<?php echo ($game->id); ?>">
                     Edit
                 </a>
             </td>

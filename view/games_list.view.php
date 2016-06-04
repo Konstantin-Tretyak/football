@@ -11,16 +11,19 @@
         <tr>
             <td><?php echo $game->date ?></td>
             <td>
+                <img src="<?php echo url($game->home_team()->first()->logo) ?>" height="20px">
+            </td>
+            <td>
                 <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->home_team()->first()->id); ?>">
                     <?php echo $game->home_team()->first()->name ?>
                 </a>
             </td>
             <td>
-                <form action="http://my_football.local:81/?N=<?php echo $pagination->page; ?>" class="subscribe" method="post">
+                <form action="<?php echo url_for('subscribe_team'); ?>" class="subscribe" method="post">
                     <button type="submit" class="
                     <?php
                         // TODO
-                        if ( $current_user->is_subscribed_to_team($game->home_team()->first()->id) )
+                        if ( $current_user && $current_user->is_subscribed_to_team($game->home_team()->first()->id) )
                             echo "btn btn-danger";
                         else
                             echo "btn btn-primary";
@@ -47,11 +50,14 @@
                 </a>
             </td>
             <td>
+                <img src="<?php echo url($game->guest_team()->first()->logo) ?>" height="20px">
+            </td>
+            <td>
 
-                <form action="http://my_football.local:81/?N=<?php echo $pagination->page; ?>" class="subscribe" method="post">
+                <form action="<?php echo url_for('subscribe_team'); ?>" class="subscribe" method="post">
                     <button type="submit" class="
                     <?php
-                        if ( $current_user->is_subscribed_to_team($game->guest_team()->first()->id) )
+                        if ( $current_user && $current_user->is_subscribed_to_team($game->guest_team()->first()->id) )
                             echo "btn btn-danger";
                         else
                             echo "btn btn-primary";

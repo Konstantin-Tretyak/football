@@ -2,15 +2,15 @@
     New Game
 </h1>
 
-<form action="" method="post">
+<form action="<?php echo url(url_for('admin_games_create_entity')); ?>" method="post">
     <p>
         <label for="home_team_id">Хозяева</label>
         <select name="home_team_id" id="home_team_id">
             <option>
             </option>
-            <?php foreach ($teams as $team): ?>
-                <option value="<?php echo $team['id']; ?>" <?php if(isset($old['home_team_id']) && $team['id'] == $old['home_team_id']) echo "selected" ?> >
-                    <?php echo $team['name']; ?>
+            <?php foreach (\Team::query()->all() as $team): ?>
+                <option value="<?php echo $team->id; ?>" <?php if(isset($old['home_team_id']) && $team->id == $old['home_team_id']) echo "selected" ?> >
+                    <?php echo $team->name; ?>
                 </option>
             <?php endforeach; ?>
         </select>
@@ -28,9 +28,9 @@
         <select name="guest_team_id" id="guest_team_id">
             <option>
             </option>
-            <?php foreach ($teams as $team): ?>
-                <option value="<?php echo $team['id']; ?>" <?php if(isset($old['guest_team_id']) && $team['id'] == $old['guest_team_id']) echo "selected" ?> >
-                    <?php echo $team['name']; ?>
+            <?php foreach (\Team::query()->all() as $team): ?>
+                <option value="<?php echo $team->id; ?>" <?php if(isset($old['guest_team_id']) && $team->id == $old['guest_team_id']) echo "selected" ?> >
+                    <?php echo $team->name; ?>
                 </option>
             <?php endforeach; ?>
         </select>

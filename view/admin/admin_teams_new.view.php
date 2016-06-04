@@ -2,7 +2,7 @@
     New Team
 </h1>
 
-<form action="" method="post">
+<form action="<?php echo url(url_for('admin_teams_create_entity')); ?>" method="post">
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" name="name" id="name" placeholder="team">

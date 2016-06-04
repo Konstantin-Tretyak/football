@@ -3,7 +3,7 @@
     define('ROOT_CATALOGUE', 'http://my_football.local:81');
     define('BASE_DIR', __DIR__);
     define('ENV', 'dev');
-
+    define('FILE_NAMES_EMAIL' ,"D:\\xampp\htdocs\\football_with_controllers\\email.txt");
 
     function all_routes() {
         return [
@@ -11,28 +11,40 @@
             // TODO: move methods to classes and write like
             //       => ['class' => '\App\HomeController',  'method' => 'home'],
             //Openning pages
-            '/'                    => ['file' =>'games_list.php', 'namespace' => 'Controllers\UserPages', 'function' => 'game_list_page', 'alias'=>'main'],
-            '/user'                => ['file' => 'user.php', 'namespace' => 'Controllers\UserPages', 'function' => 'user_page', 'alias'=>'user'],
-            '/club'                => ['file' =>'club_page.php', 'namespace' => 'Controllers\UserPages', 'function' => 'club_page', 'alias'=>'club'],
-            '/game'                => ['file' =>'game.php', 'namespace' => 'Controllers\UserPages', 'function' => 'game_page', 'alias'=>'game'],
+            '/'                    => ['file' =>'game.php', 'namespace' => 'Controllers\Game', 'function' => 'index', 'alias'=>'main'],
+            '/user'                => ['file' => 'user.php', 'namespace' => 'Controllers\User', 'function' => 'show', 'alias'=>'user'],
+            '/club'                => ['file' =>'team.php', 'namespace' => 'Controllers\Team', 'function' => 'show', 'alias'=>'club'],
+            '/game'                => ['file' =>'game.php', 'namespace' => 'Controllers\Game', 'function' => 'show', 'alias'=>'game'],
             //Login/logout
             '/login'               => ['file' =>'auth.php', 'namespace' => 'Controllers\Auth', 'function' => 'login',  'alias'=>'login'],
             '/logout'              => ['file' =>'auth.php', 'namespace' => 'Controllers\Auth', 'function' => 'logout', 'alias'=>'logout'],
+            
+            '/comments/create_entity'      => ['file' =>'comment.php', 'namespace' => 'Controllers\Comment', 'function' => 'create_entity', 'alias'=>'create_comment'],
+
+
             //Admin pages
             '/admin'               => ['file' =>'admin/index.php',  'namespace' => 'Controllers\Admin', 'function' => 'index',  'alias'=>'admin'],
 
             // TODO: autoloading (auto-require file by namespace)
             '/admin/teams/edit'    => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'edit',  'alias'=>'admin_teams_edit'],
-            '/admin/teams/new'  => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'create',   'alias'=>'admin_teams_new'],
+            '/admin/teams/edit_entity'    => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'edit_entity',  'alias'=>'admin_teams_edit_entity'],
+            '/admin/teams/create'  => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'create',   'alias'=>'admin_teams_new'],
+            '/admin/teams/create_entity'  => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'create_entity',   'alias'=>'admin_teams_create_entity'],
             '/admin/teams/index'   => ['file' =>'admin/teams.php', 'namespace' => 'Controllers\Admin\Teams', 'function' => 'index', 'alias'=>'admin_teams'],
 
             '/admin/games/edit'    => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'edit',  'alias'=>'admin_games_edit'],
-            '/admin/games/new'     => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'create',   'alias'=>'admin_games_new'],
+            '/admin/games/edit_entity'    => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'edit_entity',  'alias'=>'admin_games_edit_entity'],
+            '/admin/games/create'     => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'create',   'alias'=>'admin_games_new'],
+            '/admin/games/create_entity' => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'create_entity',   'alias'=>'admin_games_create_entity'],
             '/admin/games/index'   => ['file' =>'admin/games.php', 'namespace' => 'Controllers\Admin\Games', 'function' => 'index',   'alias'=>'admin_games'],
             
-            '/admin/players/new'   => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'create', 'alias'=>'admin_players_new'],
+            '/admin/players/create'   => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'create', 'alias'=>'admin_players_new'],
             '/admin/players/create_entity' => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'create_entity', 'alias'=>'admin_players_create_entity'],
-            '/admin/players/edit'  => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'edit', 'alias'=>'admin_players_edit'],
+
+            '/admin/players/edit' => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'edit', 'alias'=>'admin_players_edit'],
+            '/admin/players/edit_entity' => ['file' =>'admin/players.php', 'namespace' => 'Controllers\Admin\Players', 'function' => 'edit_entity', 'alias'=>'admin_players_edit_entity'],
+
+            '/teams/subscribe' => ['file' => 'team.php', 'namespace' => 'Controllers\Team', 'function' => 'subscribe', 'alias'=>'subscribe_team'],
         ];
     }
 
@@ -51,8 +63,6 @@
     ///DATA BASE
 
     $another_page = false;
-
-    define('FILE_NAMES_EMAIL' ,"D:\\xampp\htdocs\\football\\email.txt");
 
     function connect()
     {
@@ -141,14 +151,11 @@
 
     ///Email gag
 
-    function create_Email_letter($user, $letters)
+    function create_Email_letter($user, $letter)
     {
         $email_letter = "";
 
-        foreach ($letters as $letter)
-        {
             $email_letter .= date('Y-m-d H:i:s')." ".$user." ".$letter."\n";
-        }
 
         return $email_letter;
     }
@@ -214,9 +221,7 @@
     function redirect_back()
     {
         $request_url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        // var_dump($request_url);
-        // var_dump($_SERVER['HTTP_REFERER']);
-        // TODO: fiex this logic
+
         $url = (isset($_SERVER['HTTP_REFERER']) && ($request_url != $_SERVER['HTTP_REFERER']))
                 ? $_SERVER['HTTP_REFERER']
                 : url_for('main');
@@ -382,24 +387,6 @@ function sgp($url, $varname, $value) // substitute get parameter
         $anchor = (isset($matches[3])) ? $matches[3] : '';
         $newurl = $matches[1].$newgp.$anchor;
         return $newurl;
-    }
-
-    // TODO: move this method to separate controller method
-    function subscribe_team()
-    {
-        validate_authorized();
-        ///TODO: как определить от какой кнопки пришёл запрос
-        //$user_team = \UserTeam::create(['team_id' => json_decode(file_get_contents("php://input"))->{'team_id'}, 'user_id' => get_authorized_user()['id']]);
-        if( $_POST['status']=="delete")
-        {
-            \UserTeam::delete('team_id', $_POST['team_id']);
-            return json_encode(['status'=>'deleted']);
-        }
-        else
-        {
-            $user_team = \UserTeam::create(['team_id' => $_POST['team_id'], 'user_id' => get_authorized_user()['id']]);
-            return json_encode($user_team->toArray());
-        }
     }
 
     function dd($var) {

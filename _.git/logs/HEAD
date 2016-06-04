@@ -1,0 +1,16 @@
+0000000000000000000000000000000000000000 65894983a9551e246f1e9ed78eb23cedc5db5d73 Your Name <you@example.com> 1464431633 +0300	commit (initial): init
+65894983a9551e246f1e9ed78eb23cedc5db5d73 40fe99d2dc6b6cacb5620cf2787d2a7b2b6f8b2d Your Name <you@example.com> 1464432537 +0300	commit: + club page: works with normal ORM
+40fe99d2dc6b6cacb5620cf2787d2a7b2b6f8b2d 54887efb44a60832a9ffd5b5eebdca27d100421f Your Name <you@example.com> 1464432572 +0300	commit (amend): + club page: works with normal ORM
+54887efb44a60832a9ffd5b5eebdca27d100421f 77cfac7bb3eb78d65a9eb0c480a8320a05d30c59 Your Name <you@example.com> 1464432818 +0300	commit (amend): + club page: works with normal ORM
+77cfac7bb3eb78d65a9eb0c480a8320a05d30c59 f25e7443d8abf3def45250c51f99c41333615320 Your Name <you@example.com> 1464434518 +0300	commit: + club page: pagination
+f25e7443d8abf3def45250c51f99c41333615320 34187418479d50fed6986471814d03b98c20697c Your Name <you@example.com> 1464434531 +0300	commit (amend): + club page: pagination
+34187418479d50fed6986471814d03b98c20697c 78abc9d8fbd03a41e4ca5a631b15e3c9d1dbb156 Your Name <you@example.com> 1464434771 +0300	commit (amend): + club page: pagination
+78abc9d8fbd03a41e4ca5a631b15e3c9d1dbb156 edc8562e7031df956350d7d4553ea2fa64ff4594 Your Name <you@example.com> 1464434832 +0300	commit (amend): + club page: pagination
+edc8562e7031df956350d7d4553ea2fa64ff4594 f616efb73029648ce6662730590bfa5aa69aa570 Your Name <you@example.com> 1464437138 +0300	commit: + refactored games_list; + moved common JS stuff to app.js
+f616efb73029648ce6662730590bfa5aa69aa570 e353232b7f1dedbbd65584672d56d274470fd58e Your Name <you@example.com> 1464441124 +0300	commit: +++ $user->teams(), $user->is_subscribed_to_team() methods; + changed games_list page
+e353232b7f1dedbbd65584672d56d274470fd58e 8e423409d26f35f51d7c8397e100be6124ceffcf Your Name <you@example.com> 1464444220 +0300	commit (amend): +++ $user->teams(), $user->is_subscribed_to_team() methods; + changed games_list page
+8e423409d26f35f51d7c8397e100be6124ceffcf 4c80722b2f8ca65a85ef4f47647a7615407c40c7 Your Name <you@example.com> 1464446318 +0300	commit: + admin/players/create_entity: begin of REST URLing
+4c80722b2f8ca65a85ef4f47647a7615407c40c7 c16b1848d1f510838bd95bb7efe483c45d2d99e5 Your Name <you@example.com> 1464451021 +0300	commit: + hasManyThrough method; +++ OBSERVER pattern: send letters to users subscribed to playing commands after game creation
+c16b1848d1f510838bd95bb7efe483c45d2d99e5 63655965d4152259b2da43a34bcf5ed5dcf488bd Your Name <you@example.com> 1464451042 +0300	commit: + added .gitignore
+63655965d4152259b2da43a34bcf5ed5dcf488bd 2892655d3c2a551a6d3897ed483d2c64a736432a Your Name <you@example.com> 1464970822 +0300	commit: 03.06 begin
+2892655d3c2a551a6d3897ed483d2c64a736432a fa6a1f1d85c8828bfac1cc7fd598670574541c00 Your Name <you@example.com> 1465024636 +0300	commit: ~ 03.06 evening

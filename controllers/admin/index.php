@@ -7,8 +7,6 @@
         validate_authorized();
         validate_authorized_as_admin();
 
-        $data = null;
-        
-        return view('admin', $data, 'admin');
+        return view('admin', null, 'admin');
     }
 ?>

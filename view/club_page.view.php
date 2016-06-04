@@ -4,7 +4,7 @@
     <?php echo $team->name; ?>
 </h1>
 
-    <form action="http://<?php echo $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" class="subscribe" method="post">
+    <form action="<?php echo url_for('subscribe_team'); ?>" class="subscribe" method="post">
         <button type="submit" class="
         <?php
             if ( is_user_club($team->id) )
