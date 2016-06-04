@@ -36,7 +36,8 @@ function index()
     validate_authorized();
     validate_authorized_as_admin();
 
-    return view('admin_teams', null, 'admin');
+    $teams = \Team::query()->all();
+    return view('admin_teams', compact('teams'), 'admin');
 }
 
 function edit()

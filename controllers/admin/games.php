@@ -7,7 +7,8 @@
         validate_authorized();
         validate_authorized_as_admin();
 
-        return view('admin_games_new', null, 'admin');
+        $teams = \Team::query()->all();
+        return view('admin_games_new', compact('teams'), 'admin');
     }
 
     function create_entity()

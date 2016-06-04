@@ -1,38 +1,5 @@
 <h1>Матч</h1>
 <h3>
-<!--     <table class="table table-responsive">
-        <tr>
-            <td class="padding-right-10">
-                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->home_team()->first()->id); ?>">
-                    <img src="<?php echo url($game->home_team()->first()->logo ? $game->home_team()->first()->logo : '/img/team-placeholder.png') ?>" height="50px">
-                </a>
-            </td>
-            <td class="padding-right-10">
-                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->home_team()->first()->id); ?>">
-                    <?php echo $game->home_team()->first()->name ?>
-                </a>
-            </td>
-            <td class="padding-right-10">
-                <?php 
-                if ( strtotime($game->date) <= strtotime(date('y-m-d')) )
-                    echo $game->home_scores." - ".$game->guest_scores;
-                else
-                    echo "- : -";
-                ?>
-            </td>
-            <td class="padding-right-10">
-                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->guest_team()->first()->id); ?>">
-                    <?php echo $game->guest_team()->first()->name ?></td>
-                </a>
-            </td>
-            <td class="padding-right-10">
-                <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->guest_team()->first()->id); ?>">
-                    <img src="<?php echo url($game->guest_team()->first()->logo ? $game->guest_team()->first()->logo : '/img/team-placeholder.png') ?>" height="50px">
-                </a>
-            </td>
-        </tr>
-    </table> -->
-
     <div class="row">
         <div class="col-xs-2">
             <a href="<?php echo url_for('club'); ?>?club_id=<?php echo ($game->home_team()->first()->id); ?>">

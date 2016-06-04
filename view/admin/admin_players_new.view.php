@@ -1,6 +1,4 @@
-<h1>
-    New player
-</h1>
+<h1>Новый игрок</h1>
 
 <form action="<?php echo url(url_for('admin_players_create_entity')); ?>" method="post">
     <div class="form-group">
@@ -10,12 +8,16 @@
         <?php if (isset($errors['player_name'])): ?>
             <span class="help-block"><?php echo $errors['player_name'] ?></span>
         <?php endif ?>
+    </div>
 
+    <div class="form-group">
         <label for="player_position">Позиция</label>
         <input type="text" class="form-control" name="player_position" id="player_position" placeholder="Введите позицию">
-        <p>Выберите клуб</p>
-        
-        <select name="players_team_id">
+    </div>
+
+    <div class="form-group">
+        <label>Выберите клуб</label>
+        <select class="form-control" name="players_team_id">
             <option>
             </option>
             <?php foreach ($teams as $team): ?>
@@ -24,15 +26,12 @@
                 </option>
             <?php endforeach; ?>
         <select>
-
         <?php if (isset($errors['players_team_id'])): ?>
             <span class="help-block"><?php echo $errors['players_team_id'] ?></span>
         <?php endif ?>
+    </div>
 
-        <p>
-            <button type="submit" class="btn btn-default">
-                Создать игрока
-            </button>
-        </p>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">Сохранить</button>
     </div>
 </form>

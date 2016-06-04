@@ -50,10 +50,10 @@
 
     function message_for_admin()
     {
-        return array('teams_edit_name'=>'Название команды было измененно',
-                     'teams_new'=>'Команда была созданна',
+        return array('teams_edit_name'=>'Название команды было изменено',
+                     'teams_new'=>'Команда была создана',
                      'games_edit'=>'Игра была изменена',
-                     'games_new'=>'Игра была созданна',
+                     'games_new'=>'Игра была создана',
                      'games_edit_not_start'=>'Матч ещё не начался, нельзя менять счет',
                      'players_edit'=>'Игрок был изменен',
                      'players_new'=>'Игрок был создан'
@@ -64,14 +64,17 @@
     // TODO: remove $catalogue
     function view($path, $data = null, $catalogue="")
     {
-        echo flash_get('message');
+        $data['message'] = flash_get('message');
 
         $data['authorized_user'] = get_authorized_user();
         $data['current_user'] = get_auth_user();
 
-        $data['old'] = flash_get('old');
+        $old = flash_get('old');
+        $data['old'] = $old ? $old : [];
 
-        $data['errors'] = flash_get('errors');
+        $errors = flash_get('errors');
+        $data['errors'] = $errors ? $errors : [];
+
 
         if ($data)
         {
@@ -82,16 +85,6 @@
         $path = BASE_DIR.'/view/'.$catalogue.'/'.$path.'.view.php';
         require BASE_DIR.'/view/'.$catalogue.'/layout.php';
         return ob_get_clean();
-    }
-
-    ///admin view
-    function show_admin_messages()
-    {
-        if (!empty($_SESSION['message']))
-        {
-            echo $_SESSION['message'];
-        }
-        unset($_SESSION['message']);
     }
 
     ///end admin view

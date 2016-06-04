@@ -20,7 +20,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="<?php echo url(url_for('main')) ?>">My football - админ панель</a>
+                  <a class="navbar-brand" href="<?php echo url(url_for('admin')) ?>">My football - админ панель</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -37,6 +37,12 @@
 
         <div class="container">
             <div class="col-md-8 col-md-offset-2">
+                <?php if($message): ?>
+                    <div class="alert alert-success">
+                        <?php echo $message; ?>
+                    </div>
+                <?php endif; ?>
+                
                 <?php include($path); ?>
             </div>
         </div>
