@@ -5,15 +5,9 @@ $(document).ready
         $("form.subscribe").on ('submit',
           function(event)
           {
-             //alert($(this).find("button").attr("id")-1);
-             //form = $("form")[0];
              event.preventDefault();
              var form = $(this);
-             var status;
-             if(form.find("button").hasClass("btn-danger"))
-                status = "delete";
-             else
-                status = "subscribe";
+             var status = form.data("action");
              $.ajax
                 (
                     $(this).attr('action'),
@@ -24,49 +18,33 @@ $(document).ready
                         success: function(result)
                         {
                             ///show messages
-                                if(result.status=="deleted")
-                                    notify("Yoa Are Describe At Team", 'error');
+                                if(status=="delete")
+                                    notify("You have successfully unsubscribed from team's updates", 'success');
                                 else
-                                    notify("Yoa Are Add Team To You're Storage", 'success');
+                                    notify("You have successfully subscribed to team's updates", 'success');
                             ///
 
                             ///change button view
-                                var id = form.find("button").attr("id");
-                                if(form.find("button").hasClass("btn-primary"))
+                                if(status == 'subscribe')
                                 {
-                                    $("form").find('[id='+id+']').removeClass("btn-primary").addClass("btn-danger");
-                                    //form.find("button").addClass("btn-danger");   
+                                    form.data("action" , 'delete');
+                                    form.find(".icon").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
                                 }
-                                else if(form.find("button").hasClass("btn-danger"))
+                                else
                                 {
-                                    $("form").find('[id='+id+']').removeClass("btn-danger").addClass("btn-primary"); 
+                                    form.data("action" , 'subscribe');
+                                    form.find(".icon").removeClass("glyphicon-star").addClass("glyphicon-star-empty"); 
                                 }
                             ///
                         },
                         error: function ( jqXHR )
                         {
                             app.defaultAjaxError("form", jqXHR);
-                        },
-                        beforeSend: function()
-                        {
-                            form.addClass("whirl");
-                        },
-                        complete: function()
-                        {
-                            form.removeClass("whirl");
                         }
                     }
                 )
           }
         );
-
-        /*$(document).ajaxSend(function(event, request, settings) {
-        $("form").addClass("whirl");
-        });*/
-
-        /*$(document).ajaxComplete(function(event, request, settings) {
-        $("form").removeClass("whirl");
-        });*/
     }
 );
 

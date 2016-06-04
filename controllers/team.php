@@ -3,7 +3,7 @@
 
     function show()
     {
-        define('LIMIT_PAGE', 5);
+        define('LIMIT_PAGE', 10);
 
         if ( isset($_GET['club_id']) && is_numeric($_GET['club_id']) )
         {

@@ -280,19 +280,6 @@
             }
         }
 
-        function is_user_club($id)
-        {
-            $user_teams = \UserTeam::query()->where("user_id=?",[get_authorized_user()['id']])->all();
-            if(!empty($user_teams))
-            foreach ($user_teams as $user_team)
-            {
-                if($user_team->team_id === $id)
-                    return true;
-            }
-
-            return false;
-        }
-
         function get_pagination_page_number($page)
         {
             return $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];

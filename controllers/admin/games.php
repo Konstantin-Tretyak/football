@@ -36,7 +36,7 @@
 
     function index()
     {
-        define('LIMIT_PAGE', 5);
+        define('LIMIT_PAGE', 10);
 
         $page = 1;
         if (isset($_GET['N'])) {

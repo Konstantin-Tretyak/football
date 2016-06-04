@@ -6,7 +6,7 @@
     {
         validate_authorized();
 
-        define('LIMIT_PAGE', 5);
+        define('LIMIT_PAGE', 10);
 
         $team_query = get_auth_user()->teams();
 

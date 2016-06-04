@@ -47,5 +47,5 @@
 
         $games = $query->offset(LIMIT_PAGE * ($page - 1),LIMIT_PAGE)->all();
 
-        return view('games_list', compact('games', 'pagination'));
+        return view('home', compact('games', 'pagination'));
     }
