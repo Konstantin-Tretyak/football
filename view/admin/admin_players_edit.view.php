@@ -16,7 +16,7 @@
             <option>
                 Выберите клуб
             </option>
-            <?php foreach (\Team::query()->all() as $team): ?>
+            <?php foreach ($teams as $team): ?>
                 <option value="<?php echo $team->id; ?>" <?php if( $team->id == $player->team_id) {echo "selected=".$team->name.'"';} ?>>
                     <?php echo $team->name; ?>
                 </option>

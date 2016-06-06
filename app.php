@@ -1,8 +1,18 @@
 <?php
 
 
-require __DIR__.'/settings.php';
-require __DIR__.'/Autoloading.php';
+require __DIR__.'/functions.php';
+require __DIR__.'/autoload.php';
+
+
+define('ROOT_CATALOGUE', ''); // leave empty if site lays in the server root
+define('BASE_DIR', __DIR__);
+define('ENV', 'dev');
+define('FILE_NAMES_EMAIL' , __DIR__."/email.txt");
+
+// $connection_string = "mysql:host=mysql8.000webhost.com;dbname=a7543609_foor";
+// $user = 'a7543609_root';
+// $password = 'aDmiN123';
 
 $connection_string = "mysql:host=localhost;dbname=foot";
 $user = 'root';
@@ -21,11 +31,11 @@ Game::afterCreateObserver(function($game)
         foreach($users as $user)
         {
             send_Email(create_Email_letter($user->login, $message));
-        }      
+        }
 });
 
 Player::afterUpdateObserver(function($player)
-{    
+{
         if( $player->original_data->team_id != $player->team_id )
         {
             $message = "Игрок ".$player->name." перешел из ".\Team::find($player->original_data->team_id)->name." в ".\Team::find($player->team_id)->name;
@@ -50,7 +60,7 @@ Player::afterCreateObserver(function($player)
         foreach($users as $user)
         {
             send_Email(create_Email_letter($user->login, $message));
-        } 
+        }
 });
 
 //Game::find(1)->save();
@@ -71,7 +81,7 @@ function app_run() {
                 $response = ['code' => 200, 'body' => $response];
             }
         }
-        else 
+        else
         {
             throw new NotFoundException();
         }
@@ -84,7 +94,7 @@ function app_run() {
     {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))) {
             $response = [
-                'code' => 422, 
+                'code' => 422,
                 'body' => json_encode($e->errors)
             ];
         }
@@ -92,7 +102,7 @@ function app_run() {
         {
             flash_set('old', $_POST);
             flash_set('errors', $e->errors);
-            $response = redirect_back(); 
+            $response = redirect_back();
         }
     }
     catch (NotAllowedException $e)
@@ -103,7 +113,7 @@ function app_run() {
     {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))) {
             $response = [
-                'code' => 403, 
+                'code' => 403,
                 'body' => json_encode(['error' => 'You are not signed in. Please, sign in and refresh the page'])
             ];
         }
@@ -118,14 +128,14 @@ function app_run() {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == strtolower('xmlhttprequest'))) {
             $error = (ENV == 'dev') ? $e->getMessage()."\n".$e->getTraceAsString() : 'Sorry, some error occured';
             $response = [
-                'code' => 500, 
+                'code' => 500,
                 'body' => json_encode(['error' => $error])
             ];
         }
         else {
             $body = (ENV == 'dev') ? "<pre>".$e->getMessage()."\n".$e->getTraceAsString()."</pre>" : view('errors/500');
             $response = ['code' => 500, 'body' => $body];
-        }        
+        }
     }
 
     return $response;
