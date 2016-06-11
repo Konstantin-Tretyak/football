@@ -38,4 +38,4 @@
     <?php endforeach ?>
 </table>
 
-<?php require BASE_DIR.'/view/common/pagination.view.php';?>
+<?php require BASE_DIR.'/view/common/pagination.view.php' ?>
