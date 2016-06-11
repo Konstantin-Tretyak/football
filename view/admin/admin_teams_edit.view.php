@@ -11,8 +11,8 @@
         <?php endif ?>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-default">Изменить название и продолжить</button>
-        <button type="submit" name="page" value="<?php echo url(url_for('admin_teams')) ?>" class="btn btn-default">Изменить название</button>
+        <button type="submit" class="btn btn-primary">Сохранить и прододжить</button>
+        <button type="submit" name="page" value="<?php echo url(url_for('admin_teams')) ?>" class="btn btn-primary">Сохранить</button>
     </div>
 </form>
 
@@ -20,10 +20,12 @@
     Players
 </h2>
 
-<a href="<?php echo url(url_for('admin_players_new')); ?>"><button class="btn btn-default">New Player</button></a>
+<p>
+    <a href="<?php echo url(url_for('admin_players_new')); ?>"><button class="btn btn-success">New Player</button></a>
+</p>
 
-<table>
-    <?php foreach($team->players()->all() as $player): ?>
+<table class="table table-striped games">
+    <?php foreach($players as $player): ?>
         <tr>
             <td>
                 <?php echo $player->name; ?>
@@ -32,9 +34,6 @@
                 <a href="<?php echo url(url_for('admin_players_edit')); ?>?player_id=<?php echo $player->id ?>">
                     Edit
                 </a>
-            </td>
-            <td>
-                Delete
             </td>
         </tr>
     <?php endforeach; ?>

@@ -58,9 +58,11 @@ function edit()
 
     if (!($team = \Team::find($id))) {
         throw new \NotFoundException();
-    }            
+    } 
 
-    return view('admin_teams_edit' , compact('team'), 'admin');
+    $players = $team->players()->all();          
+
+    return view('admin_teams_edit' , compact('team', 'players'), 'admin');
 }
 
 function edit_entity()
