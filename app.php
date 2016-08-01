@@ -3,6 +3,7 @@
 
 require __DIR__.'/functions.php';
 require __DIR__.'/autoload.php';
+require __DIR__.'/simple_html_dom.php'
 
 
 define('ROOT_CATALOGUE', ''); // leave empty if site lays in the server root

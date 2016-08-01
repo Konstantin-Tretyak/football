@@ -15,5 +15,7 @@
 
         $user_teams = $team_query->offset(LIMIT_PAGE * ($pagination->page - 1),LIMIT_PAGE)->all();
 
+        
+
         return view('user', compact('user_teams','pagination'));
     }

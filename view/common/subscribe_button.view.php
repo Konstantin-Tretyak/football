@@ -5,3 +5,8 @@
                      <?php echo (get_auth_user() && get_auth_user()->is_subscribed_to_team($team->id)) ? "glyphicon-star" : "glyphicon-star-empty" ?> "></span>
     </button>
 </form>
+dsf
+dsf
+dsf
+dsf
+adsf
